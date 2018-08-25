@@ -1,4 +1,0 @@
-com\polluxframework\exception\BaseRuntimeException.class
-com\polluxframework\exception\SerializableException.class
-com\polluxframework\exception\IException.class
-com\polluxframework\exception\BaseException.class
