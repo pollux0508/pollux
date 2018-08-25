@@ -1,0 +1,4 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+pollux-test,com.pollux.frame.test.utils,WebTestSingleUtils,23,37,1,3,8,14,3,4,2,3
+pollux-test,com.pollux.frame.test,AbstractTransactionalTest,3,0,0,0,1,0,1,0,1,0
+pollux-test,com.pollux.frame.test,AbstractNoTransactionalTest,3,0,0,0,1,0,1,0,1,0

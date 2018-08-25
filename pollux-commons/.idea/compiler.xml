@@ -9,5 +9,8 @@
         <module name="pollux-commons" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="pollux-commons" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,0 +1,3 @@
+com\pollux\frame\test\AbstractNoTransactionalTest.class
+com\pollux\frame\test\AbstractTransactionalTest.class
+com\pollux\frame\test\utils\WebTestSingleUtils.class

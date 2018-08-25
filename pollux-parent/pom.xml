@@ -621,25 +621,13 @@
 					</execution>
 				</executions>
 				<configuration>
-					<suffixs>
-						<param>html</param>
-					</suffixs>
-					<globalJsMethod>MD5_METHOD</globalJsMethod>
-					<globalCssMethod>MD5_METHOD</globalCssMethod>
-					<excludesJs>
-						<param>**/static/3rd/**/*.js</param>
-					</excludesJs>
-					<excludesCss>
-						<param>**/static/3rd/**/*.css</param>
-					</excludesCss>
-					<jsRootPaths>
-						<param>/static/modules</param>
-						<param>/static/pollux</param>
-					</jsRootPaths>
-					<cssRootPaths>
-						<param>/static/modules</param>
-						<param>/static/pollux</param>
-					</cssRootPaths>
+					<excludes>
+						<exclude>/static/3rd</exclude>
+					</excludes>
+					<includes>
+						<include>/static/modules</include>
+						<include>/static/pollux</include>
+					</includes>
 				</configuration>
 			</plugin>
 			<plugin>

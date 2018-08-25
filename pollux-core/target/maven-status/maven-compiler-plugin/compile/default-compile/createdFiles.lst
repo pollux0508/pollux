@@ -1,0 +1,4 @@
+com\polluxframework\core\local\Local.class
+com\polluxframework\core\local\I18NEnum.class
+com\polluxframework\core\config\PropertyConfigurer.class
+com\polluxframework\core\config\Global.class

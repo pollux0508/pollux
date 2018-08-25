@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WebTestSingleUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pollux-test</a> &gt; <a href="index.source.html" class="el_package">com.pollux.frame.test.utils</a> &gt; <span class="el_source">WebTestSingleUtils.java</span></div><h1>WebTestSingleUtils.java</h1><pre class="source lang-java linenums">package com.pollux.frame.test.utils;
+
+import com.polluxframework.exception.SerializableException;
+import org.springframework.mock.web.MockHttpServletRequest;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.Serializable;
+
+
+/**
+ * 用于做单元测试时参数需要一个request或者session时使用
+ *
+ *
+ * @author zhumin0508
+ * created in  2018/5/9 7:56
+ * modified By:
+ */
+public class WebTestSingleUtils {
+<span class="nc" id="L20">	private WebTestSingleUtils() {</span>
+
+<span class="nc" id="L22">	}</span>
+
+	static MockHttpServletRequest request;
+
+	/**
+	 * 获取测试时需要使用的请求
+	 * request的是一个单例模式，测试过程这种整个request是同一个请求
+	 * @return 返回一个request
+	 */
+	public static HttpServletRequest getSingleRequest() {
+<span class="fc bfc" id="L32" title="All 2 branches covered.">		if (request == null) {</span>
+<span class="fc" id="L33">			request = new MockHttpServletRequest();</span>
+<span class="fc" id="L34">			request.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L35">			HttpSession session = request.getSession(true);</span>
+<span class="fc" id="L36">			session.setMaxInactiveInterval(Integer.MAX_VALUE);</span>
+		}
+<span class="fc" id="L38">		return request;</span>
+	}
+
+	/**
+	 * 获取测试时需要使用的请求
+	 * request的是一个非单例模式，测试过程这种整个request不是同一个请求
+	 * @return 返回一个request
+	 */
+	public static HttpServletRequest getNoSingleRequest() {
+<span class="nc" id="L47">		MockHttpServletRequest request = new MockHttpServletRequest();</span>
+<span class="nc" id="L48">		request.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+<span class="nc" id="L49">		HttpSession session = request.getSession(true);</span>
+<span class="nc" id="L50">		session.setMaxInactiveInterval(Integer.MAX_VALUE);</span>
+<span class="nc" id="L51">		return request;</span>
+	}
+
+	/**
+	 * 设置session值
+	 *
+	 * @param name      session名
+	 * @param attribute session值
+	 */
+	public static void setAttributeForSession(String name, Object attribute) {
+<span class="fc" id="L61">		getSingleRequest();</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (attribute instanceof Serializable) {</span>
+<span class="fc" id="L63">			HttpSession session = request.getSession();</span>
+<span class="fc" id="L64">			session.setAttribute(name, attribute);</span>
+<span class="fc" id="L65">		}else{</span>
+<span class="nc" id="L66">			throw new SerializableException();</span>
+		}
+<span class="fc" id="L68">	}</span>
+
+	/**
+	 * 获取session
+	 *
+	 * @return 返回session
+	 */
+	public static HttpSession getSession() {
+<span class="fc" id="L76">		getSingleRequest();</span>
+<span class="fc" id="L77">		return request.getSession();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

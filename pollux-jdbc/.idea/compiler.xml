@@ -9,5 +9,8 @@
         <module name="pollux-jdbc" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="pollux-jdbc" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

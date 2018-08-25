@@ -9,5 +9,8 @@
         <module name="pollux-test" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="pollux-test" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
