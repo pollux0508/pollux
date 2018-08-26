@@ -21,7 +21,6 @@ import java.util.Date;
  * modified By:
  */
 public class BaseController {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
 	private static final String STR_NULL = "null";
 
 	@InitBinder

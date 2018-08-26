@@ -1,7 +1,7 @@
 package com.polluxframework.util;
 
-import com.polluxframework.entity.PxTable;
-import com.polluxframework.exception.PxBaseException;
+import com.polluxframework.entity.Table;
+import com.polluxframework.exception.BaseException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * created in  2018/8/8 8:53
  * modified By:
  */
-public class PxJdbcUtilsTest {
+public class JdbcUtilsTest {
 
 	private String driver = "com.mysql.jdbc.Driver";
 	private String url = "jdbc:mysql://192.168.65.152:3306/station_0?useUnicode=true&characterEncoding=utf8";
@@ -27,8 +27,8 @@ public class PxJdbcUtilsTest {
 	public void getConnection() {
 		Connection connection = null;
 		try {
-			connection = PxJdbcUtils.getConnection(driver, url, username, password);
-		} catch (PxBaseException e) {
+			connection = JdbcUtils.getConnection(driver, url, username, password);
+		} catch (BaseException e) {
 			e.printStackTrace();
 		}
 		Assert.assertNotNull("获取链接失败", connection);
@@ -38,14 +38,14 @@ public class PxJdbcUtilsTest {
 	public void getAllTableNames() {
 		Connection connection = null;
 		try {
-			connection = PxJdbcUtils.getConnection(driver, url, username, password);
-		} catch (PxBaseException e) {
+			connection = JdbcUtils.getConnection(driver, url, username, password);
+		} catch (BaseException e) {
 			e.printStackTrace();
 		}
 		Assert.assertNotNull("获取链接失败", connection);
 		List<String> result = null;
 		try {
-			result = PxJdbcUtils.getAllTableNamesBySchema(connection,null);
+			result = JdbcUtils.getAllTableNamesBySchema(connection,null);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -56,14 +56,14 @@ public class PxJdbcUtilsTest {
 	public void getAllTableNamesBySchema() {
 		Connection connection = null;
 		try {
-			connection = PxJdbcUtils.getConnection(driver, url, username, password);
-		} catch (PxBaseException e) {
+			connection = JdbcUtils.getConnection(driver, url, username, password);
+		} catch (BaseException e) {
 			e.printStackTrace();
 		}
 		Assert.assertNotNull("获取链接失败", connection);
 		List<String> result = null;
 		try {
-			result = PxJdbcUtils.getAllTableNamesBySchema(connection, "hzinfo");
+			result = JdbcUtils.getAllTableNamesBySchema(connection, "hzinfo");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -78,14 +78,14 @@ public class PxJdbcUtilsTest {
 	public void getAllSchemas() {
 		Connection connection = null;
 		try {
-			connection = PxJdbcUtils.getConnection(driver, url, username, password);
-		} catch (PxBaseException e) {
+			connection = JdbcUtils.getConnection(driver, url, username, password);
+		} catch (BaseException e) {
 			e.printStackTrace();
 		}
 		Assert.assertNotNull("获取链接失败", connection);
 		List<String> result = null;
 		try {
-			result = PxJdbcUtils.getAllSchemas(connection);
+			result = JdbcUtils.getAllSchemas(connection);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -96,14 +96,14 @@ public class PxJdbcUtilsTest {
 	public void getAllTable1() {
 		Connection connection = null;
 		try {
-			connection = PxJdbcUtils.getConnection(driver, url, username, password);
-		} catch (PxBaseException e) {
+			connection = JdbcUtils.getConnection(driver, url, username, password);
+		} catch (BaseException e) {
 			e.printStackTrace();
 		}
 		Assert.assertNotNull("获取链接失败", connection);
-		List<PxTable> tables = null;
+		List<Table> tables = null;
 		try {
-			tables = PxJdbcUtils.getAllTable(connection, "station_0");
+			tables = JdbcUtils.getAllTable(connection, "station_0");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -114,14 +114,14 @@ public class PxJdbcUtilsTest {
 	public void getTableByName() {
 		Connection connection = null;
 		try {
-			connection = PxJdbcUtils.getConnection(driver, url, username, password);
-		} catch (PxBaseException e) {
+			connection = JdbcUtils.getConnection(driver, url, username, password);
+		} catch (BaseException e) {
 			e.printStackTrace();
 		}
 		Assert.assertNotNull("获取链接失败", connection);
-		PxTable table = null;
+		Table table = null;
 		try {
-			table = PxJdbcUtils.getTableByName(connection, "station_0", "assess_items");
+			table = JdbcUtils.getTableByName(connection, "station_0", "assess_items");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -133,23 +133,23 @@ public class PxJdbcUtilsTest {
 	public void createTable() {
 		Connection connection = null;
 		try {
-			connection = PxJdbcUtils.getConnection(driver, url, username, password);
-		} catch (PxBaseException e) {
+			connection = JdbcUtils.getConnection(driver, url, username, password);
+		} catch (BaseException e) {
 			e.printStackTrace();
 		}
 		Assert.assertNotNull("获取链接失败", connection);
-		PxTable table = null;
+		Table table = null;
 		try {
-			table = PxJdbcUtils.getTableByName(connection, "station_0", "assess_item_score");
+			table = JdbcUtils.getTableByName(connection, "station_0", "assess_item_score");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		Assert.assertNotNull("获取表失败", table);
 		try {
-			PxJdbcUtils.closeConnection(connection);
-			connection = PxJdbcUtils.getConnection(driver, url2, username, password);
-			PxJdbcUtils.forceCreateTable(connection,table,0);
-		} catch (PxBaseException e) {
+			JdbcUtils.closeConnection(connection);
+			connection = JdbcUtils.getConnection(driver, url2, username, password);
+			JdbcUtils.forceCreateTable(connection,table,0);
+		} catch (BaseException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();

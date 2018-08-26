@@ -1,12 +1,12 @@
 package com.polluxframework.datasource;
 
-import com.google.common.collect.Maps;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,14 +14,14 @@ import java.util.Map;
  * created in  2018/8/17 9:50
  * modified By:
  */
-public class PxDataSource  extends AbstractRoutingDataSource {
-	private static final Logger LOGGER = LoggerFactory.getLogger(PxDataSource.class);
+public class DataSource extends AbstractRoutingDataSource {
+	private static final Logger LOGGER = LoggerFactory.getLogger(DataSource.class);
 
-	private Map<Object, Object> targetCache = Maps.newHashMap();
+	private Map<Object, Object> targetCache = new HashMap<>();
 
-	private DataSource defaultTargetDataSource;
+	private javax.sql.DataSource defaultTargetDataSource;
 
-	public PxDataSource(DataSource defaultTargetDataSource) {
+	public DataSource(javax.sql.DataSource defaultTargetDataSource) {
 		this.defaultTargetDataSource = defaultTargetDataSource;
 	}
 

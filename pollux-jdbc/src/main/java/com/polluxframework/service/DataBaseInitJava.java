@@ -1,12 +1,11 @@
 package com.polluxframework.service;
 
-import com.polluxframework.datasource.PxDataSource;
-import com.polluxframework.entity.PxTable;
-import com.polluxframework.util.PxJdbcUtils;
+import com.polluxframework.datasource.DataSource;
+import com.polluxframework.entity.Table;
+import com.polluxframework.util.JdbcUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
@@ -19,21 +18,21 @@ import java.util.Map;
  * modified By:
  */
 public class DataBaseInitJava {
-	private DataSource dataSource;
+	private javax.sql.DataSource dataSource;
 
 	private static final String PX_CM_TABLE_CREATE = "CREATE TABLE PX_CM_TABLE ( TABLE_NAME VARCHAR(255) NOT NULL, VERSION VARCHAR(8) NOT NULL, FORCE_CREATE CHAR(1) DEFAULT '0' NOT NULL )";
 
-	public DataBaseInitJava(DataSource dataSource) {
+	public DataBaseInitJava(javax.sql.DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 
 	@PostConstruct
 	public void init() throws SQLException {
-		if (dataSource instanceof PxDataSource) {
-			PxDataSource hzDataSource = (PxDataSource) dataSource;
+		if (dataSource instanceof DataSource) {
+			DataSource hzDataSource = (DataSource) dataSource;
 			Map<Object, Object> dataSourceTargetCache = hzDataSource.getTargetCache();
 			for (Map.Entry<Object, Object> entry : dataSourceTargetCache.entrySet()) {
-				DataSource bean = (DataSource) entry.getValue();
+				javax.sql.DataSource bean = (javax.sql.DataSource) entry.getValue();
 				createCmTable(bean.getConnection());
 			}
 		} else {
@@ -43,9 +42,9 @@ public class DataBaseInitJava {
 
 	public void createCmTable(Connection connection) throws SQLException {
 		try {
-			PxTable table = PxJdbcUtils.getTableByName(connection, null, "PX_CM_TABLE");
+			Table table = JdbcUtils.getTableByName(connection, null, "PX_CM_TABLE");
 			if (table == null || StringUtils.isEmpty(table.getTable())) {
-				PxJdbcUtils.createTable(connection, PX_CM_TABLE_CREATE);
+				JdbcUtils.createTable(connection, PX_CM_TABLE_CREATE);
 			}
 		} finally {
 			connection.close();

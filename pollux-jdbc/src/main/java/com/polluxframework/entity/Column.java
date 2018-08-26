@@ -1,7 +1,6 @@
 package com.polluxframework.entity;
 
-import com.polluxframework.commons.utils.PxStringUtils;
-import com.polluxframework.util.PxDbColumnUtils;
+import com.polluxframework.util.DbColumnUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -9,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
  * created in  2018/8/8 9:59
  * modified By:
  */
-public class PxColumn {
+public class Column {
 	private static final String NO = "NO";
 	private static final char BLANK = ' ';
 	private static final String ZERO = "0";
@@ -95,7 +94,7 @@ public class PxColumn {
 	}
 
 	public void setComment(String comment) {
-		this.comment = PxStringUtils.replaceBlank(comment);
+		this.comment = com.polluxframework.commons.utils.StringUtils.replaceBlank(comment);
 	}
 
 	public String getDefaultValue() {
@@ -125,7 +124,7 @@ public class PxColumn {
 	public String getTypeAndSize() {
 		StringBuilder stringBuffer = new StringBuilder();
 		stringBuffer.append(type);
-		if (!PxDbColumnUtils.isNoNeedSize(type) && StringUtils.isNotEmpty(size)) {
+		if (!DbColumnUtils.isNoNeedSize(type) && StringUtils.isNotEmpty(size)) {
 			stringBuffer.append('(').append(size);
 			if (StringUtils.isNotEmpty(scale) && (!ZERO.equals(scale))) {
 				stringBuffer.append(',').append(scale);
@@ -139,16 +138,16 @@ public class PxColumn {
 		StringBuilder stringBuffer = new StringBuilder();
 		if (StringUtils.isNotEmpty(defaultValue)) {
 			stringBuffer.append("DEFAULT").append(BLANK);
-			if (PxDbColumnUtils.isChar(type)) {
+			if (DbColumnUtils.isChar(type)) {
 				stringBuffer.append('\'');
-			} else if (PxDbColumnUtils.isVarchar(type)) {
+			} else if (DbColumnUtils.isVarchar(type)) {
 				stringBuffer.append('\"');
 			}
 			stringBuffer.append(defaultValue);
 
-			if (PxDbColumnUtils.isChar(type)) {
+			if (DbColumnUtils.isChar(type)) {
 				stringBuffer.append('\'');
-			} else if (PxDbColumnUtils.isVarchar(type)) {
+			} else if (DbColumnUtils.isVarchar(type)) {
 				stringBuffer.append('\"');
 			}
 			stringBuffer.append(BLANK);

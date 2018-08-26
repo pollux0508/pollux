@@ -7,6 +7,7 @@ import com.polluxframework.web.entity.WebResponse;
 import com.polluxframework.web.utils.ExceptionUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -15,22 +16,22 @@ import org.springframework.web.bind.annotation.RestController;
  * modified By:
  */
 
-@RestController
+@ResponseBody
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	@ExceptionHandler(BaseRuntimeException.class)
-	public WebResponse handlerPXRuntimeException(BaseRuntimeException e) {
-		return ExceptionUtils.newFailure(e);
-	}
+    @ExceptionHandler(BaseRuntimeException.class)
+    public WebResponse handlerPXRuntimeException(BaseRuntimeException e) {
+        return ExceptionUtils.newFailure(e);
+    }
 
-	@ExceptionHandler(SerializableException.class)
-	public WebResponse handlerPXSerializableException(SerializableException e) {
-		return ExceptionUtils.newFailure(e);
-	}
+    @ExceptionHandler(SerializableException.class)
+    public WebResponse handlerPXSerializableException(SerializableException e) {
+        return ExceptionUtils.newFailure(e);
+    }
 
-	@ExceptionHandler(Exception.class)
-	public WebResponse handlerException(Exception e) {
-		return ExceptionUtils.newFailure(WebConstant.DEFAULT_ERROR_CODE, WebConstant.DEFAULT_ERROR_MESSAGE, e.getCause().getMessage());
-	}
+    @ExceptionHandler(Exception.class)
+    public WebResponse handlerException(Exception e) {
+        return ExceptionUtils.newFailure(WebConstant.DEFAULT_ERROR_CODE, WebConstant.DEFAULT_ERROR_MESSAGE, e.getCause().getMessage());
+    }
 }

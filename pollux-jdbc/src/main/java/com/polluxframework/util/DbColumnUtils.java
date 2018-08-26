@@ -5,12 +5,12 @@ package com.polluxframework.util;
  * created in  2018/8/8 14:08
  * modified By:
  */
-public class PxDbColumnUtils {
+public class DbColumnUtils {
 	public static final String CHAR_STR="CHAR";
 	public static final String VARCHAR_STR="VARCHAR,VARCHAR2";
 	public static final String NO_NEED_SIZE="DATE,DATETIME,TIMESTAMP";
 
-	private PxDbColumnUtils(){
+	private DbColumnUtils(){
 
 	}
 

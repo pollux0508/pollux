@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
  * created in  2018/8/8 16:04
  * modified By:
  */
-public class PxIndex {
+public class Index {
 	private static final String PRIMARY = "PRIMARY";
 	private String table;
 	private String column;

@@ -1,9 +1,9 @@
 package com.polluxframework.util;
 
-import com.polluxframework.entity.PxColumn;
-import com.polluxframework.entity.PxIndex;
-import com.polluxframework.entity.PxTable;
-import com.polluxframework.exception.PxBaseException;
+import com.polluxframework.entity.Column;
+import com.polluxframework.entity.Index;
+import com.polluxframework.entity.Table;
+import com.polluxframework.exception.BaseException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,8 @@ import java.util.List;
  * created in  2018/8/8 8:30
  * modified By:
  */
-public class PxJdbcUtils {
+public class JdbcUtils {
+
 	private static final String TABLE = "TABLE";
 	private static final String TABLE_NAME = "TABLE_NAME";
 	private static final String TABLE_SCHEME = "TABLE_SCHEM";
@@ -25,9 +26,9 @@ public class PxJdbcUtils {
 	private static final String UNKNOWN_TABLE_CODE = "42S02";
 
 
-	private static final Logger logger = LoggerFactory.getLogger(PxJdbcUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(JdbcUtils.class);
 
-	private PxJdbcUtils() {
+	private JdbcUtils() {
 	}
 
 	/**
@@ -36,18 +37,18 @@ public class PxJdbcUtils {
 	 * @param username 数据库用户名
 	 * @param password 数据库密码
 	 * @return 数据库链接
-	 * @throws PxBaseException 配置异常或驱动找不到
+	 * @throws BaseException 配置异常或驱动找不到
 	 */
-	public static Connection getConnection(String driver, String url, String username, String password) throws PxBaseException {
+	public static Connection getConnection(String driver, String url, String username, String password) throws BaseException {
 		try {
 			Class.forName(driver);
 			return DriverManager.getConnection(url, username, password);
 		} catch (ClassNotFoundException e) {
 			logger.error("JDBC驱动类: {} 无法找到", driver);
-			throw new PxBaseException("PXKFDB000", "JDBC驱动类无法找到", e);
+			throw new BaseException("PXKFDB000", "JDBC驱动类无法找到", e);
 		} catch (SQLException e) {
 			logger.error("无法获取Connection，请确认配置的参数是否正确 url: {}, username: {} ,password: {}", url, username, password);
-			throw new PxBaseException("PXKFDB001", "无法获取Connection，请确认配置的参数是否正确", e);
+			throw new BaseException("PXKFDB001", "无法获取Connection，请确认配置的参数是否正确", e);
 		}
 	}
 
@@ -92,18 +93,18 @@ public class PxJdbcUtils {
 	 * @return 返回该实例名下所有表
 	 * @throws SQLException Sql异常
 	 */
-	public static List<PxTable> getAllTable(Connection connection, String schema) throws SQLException {
-		List<PxTable> result = new ArrayList<>(32);
+	public static List<Table> getAllTable(Connection connection, String schema) throws SQLException {
+		List<Table> result = new ArrayList<>(32);
 		DatabaseMetaData meta = connection.getMetaData();
 		ResultSet tables = getTables(meta, schema, null);
 		while (tables.next()) {
-			PxTable table = new PxTable();
+			Table table = new Table();
 			table.setTable(tables.getString(TABLE_NAME));
 			table.setSchema(schema == null ? tables.getString(TABLE_SCHEME) : schema);
 			table.setComment(tables.getString(COMMENT));
 			result.add(table);
 		}
-		for (PxTable table : result) {
+		for (Table table : result) {
 			table.setColumns(getColumns(connection, schema, table.getTable()));
 		}
 		tables.close();
@@ -117,8 +118,8 @@ public class PxJdbcUtils {
 	 * @return 获取表结构
 	 * @throws SQLException Sql异常
 	 */
-	public static PxTable getTableByName(Connection connection, String schema, String tableName) throws SQLException {
-		PxTable result = new PxTable();
+	public static Table getTableByName(Connection connection, String schema, String tableName) throws SQLException {
+		Table result = new Table();
 		DatabaseMetaData meta = connection.getMetaData();
 		ResultSet tables = getTables(meta, schema, tableName);
 		if (tables.next()) {
@@ -143,13 +144,13 @@ public class PxJdbcUtils {
 	 * @return 该表对应的所有列
 	 * @throws SQLException Sql异常
 	 */
-	public static List<PxColumn> getColumns(Connection connection, String schema, String tableName) throws SQLException {
+	public static List<Column> getColumns(Connection connection, String schema, String tableName) throws SQLException {
 		if(StringUtils.isEmpty(tableName)){
 			return null;
 		}
 		DatabaseMetaData meta = connection.getMetaData();
 		ResultSet columns = meta.getColumns(null, schema, tableName, null);
-		List<PxColumn> result = getColumnsByRs(columns);
+		List<Column> result = getColumnsByRs(columns);
 		columns.close();
 		return result;
 	}
@@ -161,15 +162,15 @@ public class PxJdbcUtils {
 	 * @return 该表对应的主键的相关信息
 	 * @throws SQLException Sql异常
 	 */
-	public static List<PxIndex> getPrimaryKeys(Connection connection, String schema, String tableName) throws SQLException {
+	public static List<Index> getPrimaryKeys(Connection connection, String schema, String tableName) throws SQLException {
 		if(StringUtils.isEmpty(tableName)){
 			return null;
 		}
-		List<PxIndex> result = new ArrayList<>(8);
+		List<Index> result = new ArrayList<>(8);
 		DatabaseMetaData meta = connection.getMetaData();
 		ResultSet rs = meta.getPrimaryKeys(null, schema, tableName);
 		while (rs.next()) {
-			PxIndex index = new PxIndex();
+			Index index = new Index();
 			index.setTable(tableName);
 			index.setColumn(rs.getString("COLUMN_NAME"));
 			index.setName(rs.getString("PK_NAME"));
@@ -185,10 +186,10 @@ public class PxJdbcUtils {
 	 * @return 返回列信息
 	 * @throws SQLException 获取数据异常
 	 */
-	private static List<PxColumn> getColumnsByRs(ResultSet columns) throws SQLException {
-		List<PxColumn> result = new ArrayList<>(32);
+	private static List<Column> getColumnsByRs(ResultSet columns) throws SQLException {
+		List<Column> result = new ArrayList<>(32);
 		while (columns.next()) {
-			PxColumn column = new PxColumn();
+			Column column = new Column();
 			column.setTable(columns.getString(TABLE_NAME));
 			column.setColumn(columns.getString("COLUMN_NAME"));
 			column.setType(columns.getString("TYPE_NAME"));
@@ -219,7 +220,7 @@ public class PxJdbcUtils {
 	 * @param dbType     数据库类型 0 Mysql  其他为标准sql数据库
 	 * @throws SQLException SQL异常
 	 */
-	public static void createTable(Connection connection, PxTable pxTable, int dbType) throws SQLException {
+	public static void createTable(Connection connection, Table pxTable, int dbType) throws SQLException {
 		String sql = pxTable.getCreateTable(dbType);
 		logger.debug("执行建表SQL：{}", sql);
 		execute(connection, sql);
@@ -239,7 +240,7 @@ public class PxJdbcUtils {
 	 * @param dbType     数据库类型 0 Mysql  其他为标准sql数据库
 	 * @throws SQLException SQL异常
 	 */
-	public static void forceCreateTable(Connection connection, PxTable pxTable, int dbType) throws SQLException {
+	public static void forceCreateTable(Connection connection, Table pxTable, int dbType) throws SQLException {
 		String sql = pxTable.getDropTable();
 		logger.debug("执行删除表SQL：{}", sql);
 		dropTable(connection, sql);
