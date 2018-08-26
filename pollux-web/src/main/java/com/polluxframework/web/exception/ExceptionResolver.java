@@ -30,10 +30,12 @@ public class ExceptionResolver implements HandlerExceptionResolver {
 		ModelAndView result;
 		WebResponse error = new WebResponse();
 		if (exception instanceof IException) {
-			IException polluxException = (IException) exception;
-			error.setFailure(polluxException.getCode(), polluxException.getMsg());
+			IException iException = (IException) exception;
+			error.setCode(iException.getCode());
+			error.setMsg(iException.getMsg());
 		} else {
-			error.setFailure(WebConstant.DEFAULT_ERROR_CODE, WebConstant.DEFAULT_ERROR_MESSAGE);
+			error.setCode(WebConstant.DEFAULT_ERROR_CODE);
+			error.setMsg(WebConstant.DEFAULT_ERROR_MESSAGE);
 		}
 		logger.error(exception.getMessage());
 		if (RequestUtils.isAjaxRequest(request)) {

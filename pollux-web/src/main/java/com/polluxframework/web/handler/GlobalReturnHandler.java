@@ -2,7 +2,6 @@ package com.polluxframework.web.handler;
 
 import com.polluxframework.web.constant.WebConstant;
 import com.polluxframework.web.entity.WebResponse;
-import com.polluxframework.web.utils.ExceptionUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -29,7 +28,9 @@ public class GlobalReturnHandler implements ResponseBodyAdvice<Object> {
 	@Override
 	public Object beforeBodyWrite(Object result, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
 		if (result == null) {
-			return ExceptionUtils.newFailure(WebConstant.DEFAULT_ERROR_CODE, "获取数据失败");
+			WebResponse webResponse = new WebResponse(WebConstant.DEFAULT_ERROR_CODE,"获取数据失败");
+			webResponse.setStatus(WebConstant.RESPONSE_STATUS_FAIL);
+			return webResponse;
 		}
 		if (result instanceof WebResponse || result instanceof String) {
 			return result;

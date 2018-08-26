@@ -37,7 +37,7 @@ public class WebConstant {
 	/**
 	 * 响应状态 失败
 	 */
-	public static final int RESPONSE_STATUS_FAIL = 500;
+	public static final int RESPONSE_STATUS_FAIL = 600;
 	/**
 	 * 用户未登录错误码
 	 */
