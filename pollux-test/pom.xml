@@ -72,5 +72,10 @@
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-servlet-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.polluxframework</groupId>
+			<artifactId>pollux-web</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>
