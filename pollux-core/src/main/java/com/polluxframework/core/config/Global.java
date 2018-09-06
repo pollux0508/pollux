@@ -1,10 +1,10 @@
 package com.polluxframework.core.config;
 
-import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,7 +17,7 @@ public class Global {
 	@Autowired
 	private PropertyConfigurer loader;
 	private static Global global;
-	private static Map<String, String> map = Maps.newHashMap();
+	private static Map<String, String> map = new HashMap<>(32);
 
 	@PostConstruct
 	public void init() {

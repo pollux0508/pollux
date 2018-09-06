@@ -33,6 +33,11 @@
 			<version>${pollux-frame.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.polluxframework</groupId>
+			<artifactId>pollux-core</artifactId>
+			<version>${pollux-frame.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
