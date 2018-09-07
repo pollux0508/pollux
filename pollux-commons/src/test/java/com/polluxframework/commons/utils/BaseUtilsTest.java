@@ -28,7 +28,7 @@ public class BaseUtilsTest {
 		Assert.assertEquals("数组cs在target从第一个位置开始再次出现的位置为-1", -1, index);
 		index = BaseUtils.checkNextCharIndex(source, 0, cs);
 		Assert.assertEquals("数组cs在source从第一个位置开始再次出现的位置为-1", -1, index);
-		char[] empty =new char[0];
+		char[] empty = new char[0];
 		index = BaseUtils.checkNextCharIndex(source, 0, empty);
 		Assert.assertEquals("数组empty在source从第一个位置开始再次出现的位置为-1", -1, index);
 		char b = 'b';
@@ -93,6 +93,9 @@ public class BaseUtilsTest {
 		target = "a";
 		index = BaseUtils.checkUpStrIndex(source, 1, target);
 		Assert.assertEquals("数组target在source从第2个位置开始上一次出现的位置为0", 0, index);
+		target = "abcacadab";
+		index = BaseUtils.checkUpStrIndex(source, 1, target);
+		Assert.assertEquals("数组target在source从第2个位置开始上一次出现的位置为-1", -1, index);
 	}
 
 	@Test
@@ -138,26 +141,138 @@ public class BaseUtilsTest {
 
 	@Test
 	public void replaceCurrentSystemLine() {
-		String path = ROOT_PATH+"zhumin.txt";
+		String path = ROOT_PATH + "zhumin.txt";
 		if (BaseUtils.getSystemFileSeparatorIsLinux()) {
-			Assert.assertTrue("在Linux环境下装换后的字符串包含右划线", BaseUtils.replaceCurrentSystemLine(path).contains( Constants.SLASH));
+			Assert.assertTrue("在Linux环境下装换后的字符串包含右划线", BaseUtils.replaceCurrentSystemLine(path).contains(Constants.SLASH));
 		} else {
-			Assert.assertFalse("在Windows环境下装换后的字符串不包含右划线，只包含双左划线",  BaseUtils.replaceCurrentSystemLine(path).contains(Constants.SLASH));
+			Assert.assertFalse("在Windows环境下装换后的字符串不包含右划线，只包含双左划线", BaseUtils.replaceCurrentSystemLine(path).contains(Constants.SLASH));
 		}
 
 	}
 
 	@Test
 	public void getFileHashKey() throws Exception {
-		File file = new File(ROOT_PATH+"zhumin.txt");
+		File file = new File(ROOT_PATH + "zhumin.txt");
 		Assert.assertNotEquals("采用文件的MD5和文件名的MD5得到的HashKey应该不一致", BaseUtils.getFileHashKey(file, Constants.FILE_HASH_MD5), BaseUtils.getFileHashKey(file, Constants.FILE_NAME_HASH_MD5));
 		boolean flag;
 		try {
 			BaseUtils.getFileHashKey(file, "MD5");
-			flag=true;
-		}catch (IOException e){
-			flag=false;
+			flag = true;
+		} catch (IOException e) {
+			flag = false;
 		}
-		Assert.assertFalse("MD5是不支持的方式，应该使用内部定义的FILE_MD5或FILE_NAME_MD5",flag);
+		Assert.assertFalse("MD5是不支持的方式，应该使用内部定义的FILE_MD5或FILE_NAME_MD5", flag);
+	}
+
+}
+
+class Column {
+	/**
+	 * 显示的名字
+	 */
+	private String name;
+	/**
+	 * 对应的字段
+	 */
+	private String field;
+	/**
+	 * 是否显示 默认显示
+	 */
+	private boolean display = true;
+	/**
+	 * 单元格应占用的行数 默认1行
+	 */
+	private int rowspan = 1;
+	/**
+	 * 单元格应占用的列数 默认1列
+	 */
+	private int colspan = 1;
+	/**
+	 * 数据对齐格式 'left'，'right'，'center' 默认居中
+	 */
+	private String align = "center";
+	/**
+	 * 表头对齐格式 'left'，'right'，'center' 默认居中
+	 */
+	private String halign = "center";
+	/**
+	 * 数据横向对齐格式 'top', 'middle', 'bottom' 默认居中
+	 */
+	private String valign = "middle";
+	/**
+	 * 孩子节点，主要用于复杂表头使用
+	 */
+	private List<Column> children;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
+
+	public boolean isDisplay() {
+		return display;
+	}
+
+	public void setDisplay(boolean display) {
+		this.display = display;
+	}
+
+	public int getRowspan() {
+		return rowspan;
+	}
+
+	public void setRowspan(int rowspan) {
+		this.rowspan = rowspan;
+	}
+
+	public int getColspan() {
+		return colspan;
+	}
+
+	public void setColspan(int colspan) {
+		this.colspan = colspan;
+	}
+
+	public String getAlign() {
+		return align;
+	}
+
+	public void setAlign(String align) {
+		this.align = align;
+	}
+
+	protected String getHalign() {
+		return halign;
+	}
+
+	public void setHalign(String halign) {
+		this.halign = halign;
+	}
+
+	public String getValign() {
+		return valign;
+	}
+
+	public void setValign(String valign) {
+		this.valign = valign;
+	}
+
+	public List<Column> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<Column> children) {
+		this.children = children;
 	}
 }

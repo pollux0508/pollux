@@ -7,7 +7,8 @@ import java.util.List;
  * created in  2018/9/6 16:55
  * modified By:
  */
-public class Table<T> {
+public class ExcelTable<T> {
+	private boolean hasInit = false;
 	/**
 	 * 表名标题
 	 */
@@ -19,7 +20,7 @@ public class Table<T> {
 	/**
 	 * 对应的列
 	 */
-	private List<Column> columns;
+	private List<ExcelColumn> columns;
 	/**
 	 * 对应的数据
 	 */
@@ -41,11 +42,11 @@ public class Table<T> {
 		this.striped = striped;
 	}
 
-	public List<Column> getColumns() {
+	public List<ExcelColumn> getColumns() {
 		return columns;
 	}
 
-	public void setColumns(List<Column> columns) {
+	public void setColumns(List<ExcelColumn> columns) {
 		this.columns = columns;
 	}
 
@@ -55,6 +56,24 @@ public class Table<T> {
 
 	public void setData(List<T> data) {
 		this.data = data;
+	}
+
+	public void init() {
+		if(hasInit){
+			return;
+		}
+		int size = columns.size();
+		int prev = 0;
+		for (int i = 0; i < size; i++) {
+			ExcelColumn column = columns.get(i);
+			column.setCosNum(prev);
+			column.init();
+			prev += column.getColspan();
+		}
+	}
+
+	public boolean isHasInit() {
+		return hasInit;
 	}
 
 	@Override

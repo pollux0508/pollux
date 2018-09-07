@@ -65,15 +65,8 @@ public class FileUtils {
 			}
 			String string = new String(fileContent, Charset.forName(sourceEncoding));
 			char[] lineFeedChar = getFileLineFeed(string);
-			StringBuilder lineFeed = new StringBuilder();
-			if (lineFeedChar.length == 0) {
-				result = new String[1];
-				result[0] = string;
-				return result;
-			} else {
-				lineFeed.append(lineFeedChar);
-			}
-			result = string.split(lineFeed.toString());
+			String lineFeed = new String(lineFeedChar);
+			result = string.split(lineFeed);
 		}
 		return result;
 	}

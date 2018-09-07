@@ -22,7 +22,7 @@ public class Pagination implements IPagination,Serializable {
 		this.pageKey = pageKey;
 	}
 
-	private Map<String, Object> queryParams = new HashMap<>();
+	private Map<String, String> queryParams = new HashMap<>();
 
 	@Override
 	public String getPageKey() {
@@ -49,11 +49,11 @@ public class Pagination implements IPagination,Serializable {
 		this.pageSize = pageSize;
 	}
 
-	public Map<String, Object> getQueryParams() {
+	public Map<String, String> getQueryParams() {
 		return queryParams;
 	}
 
-	public void setQueryParams(Map<String, Object> queryParams) {
+	public void setQueryParams(Map<String, String> queryParams) {
 		this.queryParams = queryParams;
 	}
 

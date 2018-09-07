@@ -1,5 +1,7 @@
 package com.polluxframework.report.excel.entity;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+
 import java.util.List;
 
 /**
@@ -7,7 +9,16 @@ import java.util.List;
  * created in  2018/9/6 16:40
  * modified By:
  */
-public class Column {
+public class ExcelColumn {
+	/**
+	 * 第几行，这个值只在内部使用，外部隐藏
+	 */
+	private int rowNum;
+
+	/**
+	 * 第几列，这个值只在内部使用，外部隐藏
+	 */
+	private int cosNum;
 	/**
 	 * 显示的名字
 	 */
@@ -31,20 +42,52 @@ public class Column {
 	/**
 	 * 数据对齐格式 'left'，'right'，'center' 默认居中
 	 */
-	private String align = "center";
+	private short align = HSSFCellStyle.ALIGN_CENTER;
 	/**
 	 * 表头对齐格式 'left'，'right'，'center' 默认居中
 	 */
-	private String halign = "center";
+	private short halign = HSSFCellStyle.ALIGN_CENTER;
 	/**
 	 * 数据横向对齐格式 'top', 'middle', 'bottom' 默认居中
 	 */
-	private String valign = "middle";
+	private short valign = HSSFCellStyle.VERTICAL_CENTER;
 	/**
 	 * 孩子节点，主要用于复杂表头使用
 	 */
-	private List<Column> children;
+	private List<ExcelColumn> children;
 
+
+	public ExcelColumn() {
+	}
+
+	public ExcelColumn(ExcelColumn column) {
+		this.rowNum = column.getRowNum();
+		this.cosNum = column.getCosNum();
+		this.name = column.getName();
+		this.field = column.getField();
+		this.align = column.getAlign();
+		this.valign = column.getValign();
+		this.display = column.isDisplay();
+		this.colspan = column.getColspan();
+		this.rowspan = column.getRowspan();
+		this.halign = column.getHalign();
+	}
+
+	public int getRowNum() {
+		return rowNum;
+	}
+
+	protected void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
+	}
+
+	public int getCosNum() {
+		return cosNum;
+	}
+
+	protected void setCosNum(int cosNum) {
+		this.cosNum = cosNum;
+	}
 
 	public String getName() {
 		return name;
@@ -86,42 +129,55 @@ public class Column {
 		this.colspan = colspan;
 	}
 
-	public String getAlign() {
+	public short getAlign() {
 		return align;
 	}
 
-	public void setAlign(String align) {
+	public void setAlign(short align) {
 		this.align = align;
 	}
 
-	public String getHalign() {
+	public short getHalign() {
 		return halign;
 	}
 
-	public void setHalign(String halign) {
+	public void setHalign(short halign) {
 		this.halign = halign;
 	}
 
-	public String getValign() {
+	public short getValign() {
 		return valign;
 	}
 
-	public void setValign(String valign) {
+	public void setValign(short valign) {
 		this.valign = valign;
 	}
 
-	public List<Column> getChildren() {
+	public List<ExcelColumn> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<Column> children) {
+	public void setChildren(List<ExcelColumn> children) {
 		this.children = children;
+	}
+
+	public void init() {
+		if (this.children != null) {
+			int i = 0;
+			for (ExcelColumn column : this.children) {
+				column.setRowNum(this.rowNum + 1);
+				column.setCosNum(this.cosNum + i++);
+				column.init();
+			}
+		}
 	}
 
 	@Override
 	public String toString() {
 		final StringBuffer sb = new StringBuffer("{");
-		sb.append("name:'").append(name).append('\'');
+		sb.append("rowNum:").append(rowNum);
+		sb.append(", cosNum:").append(cosNum);
+		sb.append(", name:'").append(name).append('\'');
 		sb.append(", field:'").append(field).append('\'');
 		sb.append(", display:").append(display);
 		sb.append(", rowspan:").append(rowspan);

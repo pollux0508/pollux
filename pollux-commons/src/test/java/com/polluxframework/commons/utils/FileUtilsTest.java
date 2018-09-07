@@ -30,6 +30,11 @@ public class FileUtilsTest {
 		file = new File(ROOT_PATH);
 		FileUtils.collectFiles(collected, file, includes);
 		Assert.assertEquals(6, collected.size());
+
+		file = new File("G:\\");
+		collected = new ArrayList<>();
+		FileUtils.collectFiles(collected, file, includes);
+		Assert.assertEquals(0, collected.size());
 	}
 
 	@Test

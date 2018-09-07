@@ -42,15 +42,27 @@ public class StringUtilsTest {
 
 	@Test
 	public void replaceBlank() {
-		String str=null;
+		String str = null;
 		Assert.assertNull(StringUtils.replaceBlank(str));
-		str="";
-		Assert.assertEquals(str,StringUtils.replaceBlank(str));
-		str="abc";
-		Assert.assertEquals(str,StringUtils.replaceBlank(str));
-		str="a\r\nb\r\tc \n";
-		String result= StringUtils.replaceBlank(str);
-		Assert.assertNotEquals(str,result);
-		Assert.assertEquals("abc",result);
+		str = "";
+		Assert.assertEquals(str, StringUtils.replaceBlank(str));
+		str = "abc";
+		Assert.assertEquals(str, StringUtils.replaceBlank(str));
+		str = "a\r\nb\r\tc \n";
+		String result = StringUtils.replaceBlank(str);
+		Assert.assertNotEquals(str, result);
+		Assert.assertEquals("abc", result);
+	}
+
+	@Test
+	public void toUpperCaseFirstLetter() {
+		String str = null;
+		Assert.assertNull(StringUtils.toUpperCaseFirstLetter(str));
+		str = "";
+		Assert.assertEquals(str,StringUtils.toUpperCaseFirstLetter(str));
+		str = "a";
+		Assert.assertEquals("A",StringUtils.toUpperCaseFirstLetter(str));
+		str = "ab";
+		Assert.assertEquals("Ab",StringUtils.toUpperCaseFirstLetter(str));
 	}
 }

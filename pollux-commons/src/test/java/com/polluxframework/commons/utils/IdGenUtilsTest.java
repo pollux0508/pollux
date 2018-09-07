@@ -1,6 +1,6 @@
 package com.polluxframework.commons.utils;
 
-import com.pollux.frame.test.AbstractNoTransactionalTest;
+import com.polluxframework.test.AbstractNoTransactionalTest;
 import org.junit.Assert;
 import org.junit.Test;
 
