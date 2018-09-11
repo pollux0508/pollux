@@ -1,12 +1,10 @@
-package com.pollux.frame.test.utils;
+package com.polluxframework.test.utils;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author zhumin0508

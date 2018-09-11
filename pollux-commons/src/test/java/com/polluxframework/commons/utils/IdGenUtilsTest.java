@@ -1,6 +1,5 @@
 package com.polluxframework.commons.utils;
 
-import com.polluxframework.test.AbstractNoTransactionalTest;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,7 +8,7 @@ import org.junit.Test;
  * created in  2018/5/8 15:46
  * modified By:
  */
-public class IdGenUtilsTest extends AbstractNoTransactionalTest {
+public class IdGenUtilsTest {
 
 	@Test
 	public void getNextId() {

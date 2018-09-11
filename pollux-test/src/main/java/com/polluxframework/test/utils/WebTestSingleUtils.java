@@ -1,10 +1,9 @@
-package com.pollux.frame.test.utils;
+package com.polluxframework.test.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pollux.frame.test.constant.RequestTypeEnum;
-import com.pollux.frame.test.entity.TestParam;
+import com.polluxframework.test.constant.RequestTypeEnum;
+import com.polluxframework.test.entity.TestParam;
 import com.polluxframework.exception.SerializableException;
-import com.polluxframework.web.controller.BaseController;
 import com.polluxframework.web.entity.WebResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.pollux.frame.test.entity;
+package com.polluxframework.test.entity;
 
 import org.apache.commons.lang3.StringUtils;
 

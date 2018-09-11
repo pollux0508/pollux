@@ -1,4 +1,4 @@
-package com.pollux.frame.test.constant;
+package com.polluxframework.test.constant;
 
 public enum RequestTypeEnum {
     /**
