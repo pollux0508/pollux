@@ -25,6 +25,7 @@ public class ExcelUtilsTest {
 
         ExcelColumn first = new ExcelColumn();
         first.setRowspan(3);
+        first.setColspan(2);
         first.setName("测试成绩1");
         first.setField("f0");
         first.setMerge("f0");
@@ -48,6 +49,7 @@ public class ExcelUtilsTest {
         other.setColspan(2);
         other.setName("考试成绩2");
         other.setField("f5");
+        other.setMerge("f5");
         table.getColumns().add(other);
 
         column = new ExcelColumn();
@@ -86,6 +88,12 @@ public class ExcelUtilsTest {
 
         table.getColumns().add(column);
 
+        column = new ExcelColumn();
+        column.setRowspan(3);
+        column.setColspan(2);
+        column.setName("测试成绩3");
+        column.setField("f1");
+        table.getColumns().add(column);
         return table;
     }
 
@@ -103,7 +111,7 @@ public class ExcelUtilsTest {
         List<TestData> datas = new ArrayList<>();
         for (int i = 0; i < 200; i++) {
             String str = "" + i;
-            TestData temp = new TestData(i / 10 + "0", str + "1", str + "2", str + "3", str + "5", str + "6");
+            TestData temp = new TestData(i / 10 + "0", str + "1", str + "2", str + "3", str + "5", "6");
             datas.add(temp);
         }
         table.setData(datas);

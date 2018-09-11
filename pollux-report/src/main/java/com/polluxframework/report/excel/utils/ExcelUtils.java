@@ -13,7 +13,6 @@ import org.apache.poi.ss.util.RegionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -28,13 +27,19 @@ public class ExcelUtils {
     private ExcelUtils() {
     }
 
-    public static HSSFWorkbook getHSSFWorkbook(String sheetName, ExcelTable<T> table) {
+    public static HSSFWorkbook getHSSFWorkbook(String sheetName, ExcelTable table) {
         table.init();
         HSSFWorkbook hssfWorkbook = new HSSFWorkbook();
         HSSFSheet sheet = hssfWorkbook.createSheet(sheetName);
         HSSFCellStyle style = getStandStyle(hssfWorkbook);
         ExcelHeader header = getExcelTableHeader(table);
         int rownum = header.getRows().size();
+        setHeader(header, rownum, sheet, hssfWorkbook, style);
+        setData(table, rownum, sheet, hssfWorkbook, style);
+        return hssfWorkbook;
+    }
+
+    private static void setHeader(ExcelHeader header, int rownum, HSSFSheet sheet, HSSFWorkbook hssfWorkbook, HSSFCellStyle style) {
         for (int i = 0; i < rownum; i++) {
             sheet.createRow(i);
         }
@@ -48,6 +53,7 @@ public class ExcelUtils {
                 cell.setCellValue(column.getName());
                 HSSFCellStyle styles = hssfWorkbook.createCellStyle();
                 styles.cloneStyleFrom(style);
+
                 styles.setAlignment(column.getAlign());
                 styles.setVerticalAlignment(column.getValign());
                 cell.setCellStyle(styles);
@@ -61,65 +67,62 @@ public class ExcelUtils {
                 sheet.autoSizeColumn(column.getCosNum(), true);
             }
         }
+    }
+
+    private static void setData(ExcelTable table, int rownum, HSSFSheet sheet, HSSFWorkbook hssfWorkbook, HSSFCellStyle style) {
         List<ExcelColumn> real = new ArrayList<>();
+
         realColumn(real, table.getColumns());
-        int dataNum = table.getData().size();
+
+        List datas = table.getData();
+        int dataNum = datas.size();
         for (int i = 0; i < dataNum; i++) {
             sheet.createRow(i + rownum);
         }
-
         for (int i = 0; i < real.size(); i++) {
             ExcelColumn column = real.get(i);
             Object prev = new Object();
             int initNum = rownum;
             for (int j = 0; j < dataNum; j++) {
-                Object data = table.getData().get(j);
+                Object data = datas.get(j);
                 int index = j + rownum;
                 HSSFRow row = sheet.getRow(index);
                 HSSFCell cell = row.createCell(column.getCosNum());
-                if (!column.isMerge()) {
-                    cell.setCellValue(ReflectionUtils.getFieldValueByName(data, column.getField(), column.getDefaultValue()).toString());
-                }
-                style.setAlignment(real.get(i).getAlign());
-                style.setVerticalAlignment(real.get(i).getValign());
+
+                style.setAlignment(column.getAlign());
+                style.setVerticalAlignment(column.getValign());
                 cell.setCellStyle(style);
                 cell.setCellType(HSSFCell.CELL_TYPE_STRING);
 
-                if (column.getColspan() > 1) {
-                    System.out.println("j:" + j + "column.getCosNum():" + column.getCosNum() + "column.getColspan():" + column.getColspan());
-                    CellRangeAddress cellRangePlanNo = new CellRangeAddress(index, index, column.getCosNum(), column.getCosNum() + column.getColspan() - 1);
-                    sheet.addMergedRegion(cellRangePlanNo);
-                    setBorderForMergeCell(HSSFCellStyle.BORDER_THIN, cellRangePlanNo, sheet, hssfWorkbook);
-                }
-                sheet.autoSizeColumn(column.getCosNum(), true);
                 if (column.isMerge()) {
                     Object current = ReflectionUtils.getFieldValueByName(data, column.getMerge(), "");
                     if (j == 0) {
-                        prev = current;
                         cell.setCellValue(ReflectionUtils.getFieldValueByName(data, column.getField(), column.getDefaultValue()).toString());
+                        prev = current;
                     } else if (!prev.equals(current) && initNum != index) {
                         cell.setCellValue(ReflectionUtils.getFieldValueByName(data, column.getField(), column.getDefaultValue()).toString());
-
-                        CellRangeAddress cellRangePlanNo = new CellRangeAddress(initNum, index - 1, column.getCosNum(), column.getCosNum() + column.getColspan() - 1);
-                        sheet.addMergedRegion(cellRangePlanNo);
-                        setBorderForMergeCell(HSSFCellStyle.BORDER_THIN, cellRangePlanNo, sheet, hssfWorkbook);
-                        sheet.autoSizeColumn(column.getCosNum(), true);
-                        initNum = index;
                         prev = current;
+                        mergedRegion(initNum, index - 1, column, sheet, hssfWorkbook);
+                        initNum = index;
                     } else if (prev.equals(current) && j == dataNum - 1) {
-                        CellRangeAddress cellRangePlanNo = new CellRangeAddress(initNum, j + rownum, column.getCosNum(), column.getCosNum() + column.getColspan() - 1);
-                        sheet.addMergedRegion(cellRangePlanNo);
-                        setBorderForMergeCell(HSSFCellStyle.BORDER_THIN, cellRangePlanNo, sheet, hssfWorkbook);
-                        sheet.autoSizeColumn(column.getCosNum(), true);
+                        mergedRegion(initNum, index, column, sheet, hssfWorkbook);
+                    }
+                }else{
+                    cell.setCellValue(ReflectionUtils.getFieldValueByName(data, column.getField(), column.getDefaultValue()).toString());
+                    if (column.getColspan() > 1) {
+                        mergedRegion(index, index, column, sheet, hssfWorkbook);
                     }
                 }
-
+                sheet.autoSizeColumn(column.getCosNum(), true);
             }
 
-
         }
+    }
 
-        return hssfWorkbook;
+    private static void mergedRegion(int startRow, int lastRow, ExcelColumn column, HSSFSheet sheet, HSSFWorkbook hssfWorkbook) {
+        CellRangeAddress cellRangePlanNo = new CellRangeAddress(startRow, lastRow, column.getCosNum(), column.getCosNum() + column.getColspan() - 1);
+        sheet.addMergedRegion(cellRangePlanNo);
+        setBorderForMergeCell(HSSFCellStyle.BORDER_THIN, cellRangePlanNo, sheet, hssfWorkbook);
     }
 
     public static HSSFCellStyle getStandStyle(HSSFWorkbook hssfWorkbook) {
@@ -146,7 +149,6 @@ public class ExcelUtils {
 
     public static ExcelHeader getExcelTableHeader(ExcelTable<T> table) {
         table.init();
-        List<ExcelColumn> columns = table.getColumns();
         ExcelHeader excelHeader = new ExcelHeader();
         initHeader(excelHeader, table.getColumns().get(0));
         initRow(excelHeader.getRows(), table.getColumns());
