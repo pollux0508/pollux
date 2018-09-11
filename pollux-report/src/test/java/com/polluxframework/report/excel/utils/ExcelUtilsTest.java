@@ -24,17 +24,17 @@ public class ExcelUtilsTest {
 		table.setColumns(new ArrayList<>());
 
 		ExcelColumn first = new ExcelColumn();
-		first.setRowspan(2);
-		first.setName("测试成绩");
+		first.setRowspan(3);
+		first.setName("测试成绩1");
 		first.setField("f0");
 		table.getColumns().add(first);
 
 		ExcelColumn column = new ExcelColumn();
-		column.setRowspan(1);
-		column.setColspan(5);
+		column.setRowspan(2);
+		column.setColspan(6);
 		column.setName("学员考试成绩一览表");
 		column.setChildren(new ArrayList<>());
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 6; i++) {
 			ExcelColumn child = new ExcelColumn();
 			child.setName("姓名" + i);
 			child.setField("f"+i);
@@ -43,11 +43,47 @@ public class ExcelUtilsTest {
 		table.getColumns().add(column);
 
 		ExcelColumn other = new ExcelColumn();
-		other.setRowspan(2);
-		other.setName("考试成绩");
+		other.setRowspan(3);
+		other.setName("考试成绩2");
 		other.setField("f5");
 		table.getColumns().add(other);
-		table.init();
+
+		column = new ExcelColumn();
+		column.setRowspan(1);
+		column.setColspan(7);
+		column.setName("学员考试成绩一览表");
+		column.setChildren(new ArrayList<>());
+		for (int i = 0; i < 6; i++) {
+			ExcelColumn child = new ExcelColumn();
+			child.setName("曹操" + i);
+			if(i==0){
+				child.setColspan(2);
+				child.setChildren(new ArrayList<>());
+				ExcelColumn child1 = new ExcelColumn();
+				child1.setName("刘备1");
+				child1.setField("f"+(i+1));
+
+				child.getChildren().add(child1);
+
+				ExcelColumn child2 = new ExcelColumn();
+				child2.setName("刘备2");
+				child2.setField("f"+(i+2));
+
+				child.getChildren().add(child2);
+
+			}else{
+				child.setField("f"+(i+1));
+				child.setRowspan(2);
+			}
+			if(i==5){
+				child.setField("f"+(i+1));
+				child.setDefaultValue("-");
+			}
+			column.getChildren().add(child);
+		}
+
+		table.getColumns().add(column);
+
 		return table;
 	}
 

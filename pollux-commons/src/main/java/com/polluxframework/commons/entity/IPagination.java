@@ -1,11 +1,13 @@
 package com.polluxframework.commons.entity;
 
+import java.io.Serializable;
+
 /**
  * @author zhumin0508
  * created in  2018/5/11 11:19
  * modified By:
  */
-public interface IPagination {
+public interface IPagination extends Serializable {
 	/**
 	 * 获取页码Key
 	 * @return key

@@ -51,6 +51,12 @@ public class ExcelColumn {
 	 * 数据横向对齐格式 'top', 'middle', 'bottom' 默认居中
 	 */
 	private short valign = HSSFCellStyle.VERTICAL_CENTER;
+
+	/**
+	 * 获取不到值时的默认值
+	 */
+	private String defaultValue="";
+
 	/**
 	 * 孩子节点，主要用于复杂表头使用
 	 */
@@ -161,12 +167,22 @@ public class ExcelColumn {
 		this.children = children;
 	}
 
+	public String getDefaultValue() {
+		return defaultValue;
+	}
+
+	public void setDefaultValue(String defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+
 	public void init() {
 		if (this.children != null) {
-			int i = 0;
+			int size = this.children.size();
+			int prev = 0;
 			for (ExcelColumn column : this.children) {
-				column.setRowNum(this.rowNum + 1);
-				column.setCosNum(this.cosNum + i++);
+				column.setRowNum(this.rowNum + this.rowspan);
+				column.setCosNum(this.cosNum + prev);
+				prev += column.getColspan();
 				column.init();
 			}
 		}

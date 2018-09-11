@@ -8,7 +8,6 @@ import java.util.List;
  * modified By:
  */
 public class ExcelTable<T> {
-	private boolean hasInit = false;
 	/**
 	 * 表名标题
 	 */
@@ -59,9 +58,6 @@ public class ExcelTable<T> {
 	}
 
 	public void init() {
-		if(hasInit){
-			return;
-		}
 		int size = columns.size();
 		int prev = 0;
 		for (int i = 0; i < size; i++) {
@@ -70,10 +66,6 @@ public class ExcelTable<T> {
 			column.init();
 			prev += column.getColspan();
 		}
-	}
-
-	public boolean isHasInit() {
-		return hasInit;
 	}
 
 	@Override

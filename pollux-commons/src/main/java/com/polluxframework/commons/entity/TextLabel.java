@@ -5,7 +5,7 @@ package com.polluxframework.commons.entity;
  * created in  2018/8/23 11:05
  * modified By:
  */
-public class DocLabel {
+public class TextLabel {
 	/**
 	 * 从indexPos位置开始检查标签
 	 */

@@ -1,6 +1,5 @@
 package com.polluxframework.commons.entity;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +8,7 @@ import java.util.Map;
  * created in  2018/5/8 13:52
  * modified By:
  */
-public class Pagination implements IPagination,Serializable {
+public class Pagination implements IPagination {
 
 	private String pageKey = "";
 	private Integer pageNo = 1;

@@ -609,37 +609,8 @@
 				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>com.polluxframework</groupId>
-				<artifactId>jcv-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>process</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>process</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<excludes>
-						<exclude>/static/3rd</exclude>
-					</excludes>
-					<includes>
-						<include>/static/modules</include>
-						<include>/static/pollux</include>
-					</includes>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<packagingExcludes>
-						db/**
-					</packagingExcludes>
-					<warSourceDirectory>src/main/webapp</warSourceDirectory>
-					<warSourceExcludes>**/*.html,**/*.ftl</warSourceExcludes>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

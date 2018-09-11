@@ -67,7 +67,7 @@ public class ExcelUtils {
 			HSSFRow row = sheet.createRow(initNum++);
 			for (int i = 0; i < real.size(); i++) {
 				HSSFCell cell = row.createCell(i);
-				cell.setCellValue(ReflectionUtils.getFieldValueByName(data,real.get(i).getField(),"").toString());
+				cell.setCellValue(ReflectionUtils.getFieldValueByName(data,real.get(i).getField(),real.get(i).getDefaultValue()).toString());
 				style.setAlignment(real.get(i).getAlign());
 				style.setVerticalAlignment(real.get(i).getValign());
 				cell.setCellStyle(style);
