@@ -1,7 +1,6 @@
 package com.polluxframework.web.aspect;
 
 import com.polluxframework.commons.entity.Pagination;
-import com.polluxframework.commons.utils.Bean2MapUtils;
 import com.polluxframework.commons.utils.SessionUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -13,7 +12,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 /**
  * @author zhumin0508
@@ -34,14 +32,13 @@ public class PaginationAspect {
 		logger.debug("先获取参数中的分页参数!");
 		Object[] args = point.getArgs();
 		Pagination pagination = new Pagination();
-		for(Object obj:args){
-			if(obj instanceof Pagination){
-				Map<String,Object> map=Bean2MapUtils.beanToMap(obj);
-				pagination.setQueryParams(map);
+		for (Object obj : args) {
+			if (obj instanceof Pagination) {
+				pagination = (Pagination) obj;
 			}
 		}
 		logger.debug("将分页数据保存到session中");
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-		SessionUtils.setPagination(request,pagination);
+		SessionUtils.setPagination(request, pagination);
 	}
 }
