@@ -14,37 +14,42 @@ import java.util.List;
  */
 public class ScriptScannerUtils {
 	private static final Logger logger = LoggerFactory.getLogger(ScriptScannerUtils.class);
+	private static final String SCHEMA_UPDATE = "update";
 
-	private ScriptScannerUtils(){
+	private ScriptScannerUtils() {
 	}
 
-	public static Reader getReaderByTable(String module, String dbType,String sqlType){
+
+	public static Reader getReaderByTable(String module, String dbType, String sqlType, String version) {
 		StringBuilder stringBuilder = new StringBuilder("com/polluxframework/db/");
 		stringBuilder.append(sqlType).append('/');
 		stringBuilder.append(module).append('.');
 		stringBuilder.append(dbType).append('.');
-		stringBuilder.append(sqlType).append(".sql");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(ScriptScannerUtils.class.getClassLoader().getResourceAsStream(stringBuilder.toString())));
-		return reader;
+		stringBuilder.append(sqlType);
+		if (SCHEMA_UPDATE.equals(sqlType)) {
+			stringBuilder.append('.').append(version);
+		}
+		stringBuilder.append(".sql");
+		return new BufferedReader(new InputStreamReader(ScriptScannerUtils.class.getClassLoader().getResourceAsStream(stringBuilder.toString())));
 	}
 
 	public static List<String> readScript(Reader reader) throws IOException {
 		List<String> sqlList = new ArrayList<>(16);
 		StringBuffer command = null;
 		LineNumberReader lineReader = new LineNumberReader(reader);
-		String line = null;
+		String line;
 		while ((line = lineReader.readLine()) != null) {
 			if (command == null) {
 				command = new StringBuffer();
 			}
 			String trimmedLine = line.trim();
-			if (trimmedLine.startsWith("--")) {
-				logger.info(trimmedLine);
-			} else if (trimmedLine.length() >= 1 && !trimmedLine.startsWith("//") && trimmedLine.length() >= 1 && !trimmedLine.startsWith("--")) {
+			if (trimmedLine.startsWith("--") || trimmedLine.startsWith("//")) {
+				logger.debug("SQL的注释:{}", trimmedLine);
+			} else if (trimmedLine.length() >= 1) {
 				if (trimmedLine.endsWith(";")) {
 					command.append(line.substring(0, line.lastIndexOf(";")));
 					command.append(" ");
-					logger.info(command.toString());
+					logger.debug(command.toString());
 					sqlList.add(command.toString());
 					command = null;
 				} else {

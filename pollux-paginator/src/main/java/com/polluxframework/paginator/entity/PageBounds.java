@@ -1,25 +1,19 @@
 package com.polluxframework.paginator.entity;
 
 import org.apache.ibatis.session.RowBounds;
-import org.springframework.core.annotation.Order;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author zhumin0508
  * created in  2018/8/30 10:47
  * modified By:
  */
-public class PageBounds extends RowBounds implements Serializable {
+public class PageBounds extends RowBounds{
     /**
      * 结果集是否包含TotalCount
      */
     private boolean containsTotalCount = true;
 
-    private Boolean forceNoCount = false;
+    private boolean forceNoCount = false;
 
     public PageBounds(RowBounds rowBounds) {
         super(rowBounds.getOffset(), rowBounds.getLimit());

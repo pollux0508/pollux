@@ -16,6 +16,7 @@ import java.util.List;
  */
 @JsonSerialize(using = PageModelSerializer.class)
 public class PageModel<E> extends ArrayList<E> {
+
     /**
      * 当前页码数
      */

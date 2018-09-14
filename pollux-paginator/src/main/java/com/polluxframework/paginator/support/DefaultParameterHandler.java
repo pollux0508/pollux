@@ -33,6 +33,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 
+/**
+ * @author zhumin0508
+ */
 public class DefaultParameterHandler implements ParameterHandler {
 
 	private final TypeHandlerRegistry typeHandlerRegistry;

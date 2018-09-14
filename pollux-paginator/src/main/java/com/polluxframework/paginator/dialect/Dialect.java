@@ -18,13 +18,13 @@ import java.util.*;
  * modified By:
  */
 public class Dialect {
-	protected TypeHandlerRegistry typeHandlerRegistry;
-	protected MappedStatement mappedStatement;
-	protected PageBounds pageBounds;
-	protected Object parameterObject;
-	protected BoundSql boundSql;
-	protected List<ParameterMapping> parameterMappings;
-	protected Map<String, Object> pageParameters = new HashMap<String, Object>();
+	private TypeHandlerRegistry typeHandlerRegistry;
+	private MappedStatement mappedStatement;
+	private PageBounds pageBounds;
+	private Object parameterObject;
+	private BoundSql boundSql;
+	private List<ParameterMapping> parameterMappings;
+	private Map<String, Object> pageParameters = new HashMap<>();
 
 	private String pageSQL;
 	private String countSQL;
@@ -38,9 +38,9 @@ public class Dialect {
 		init();
 	}
 
-	protected void init() {
+	public final void init() {
 		boundSql = mappedStatement.getBoundSql(parameterObject);
-		parameterMappings = new ArrayList(boundSql.getParameterMappings());
+		parameterMappings = new ArrayList<>(boundSql.getParameterMappings());
 		if (parameterObject instanceof Map) {
 			pageParameters.putAll((Map) parameterObject);
 		} else if (parameterObject != null) {
@@ -63,7 +63,7 @@ public class Dialect {
 
 		}
 
-		StringBuffer bufferSql = new StringBuffer(boundSql.getSql().trim());
+		StringBuilder bufferSql = new StringBuilder(boundSql.getSql().trim());
 		if (bufferSql.lastIndexOf(";") == bufferSql.length() - 1) {
 			bufferSql.deleteCharAt(bufferSql.length() - 1);
 		}

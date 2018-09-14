@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 import static com.polluxframework.commons.utils.StringUtils.toUpperCaseFirstLetter;
 
@@ -27,10 +28,8 @@ public class ReflectionUtils {
 	 * @return 返回目标对象的值
 	 */
 	public static Object getFieldValueByName(Object target, String field, Object defaultValue) {
-		String methodName = "get" + toUpperCaseFirstLetter(field);
 		try {
-			Method method = target.getClass().getMethod(methodName);
-			return method.invoke(target);
+			return getFieldValueByName(target, field);
 		} catch (ReflectiveOperationException e) {
 			logger.warn("找不到匹配的方法或调用目标异常", e);
 		}
@@ -49,5 +48,22 @@ public class ReflectionUtils {
 		String methodName = "get" + toUpperCaseFirstLetter(field);
 		Method method = target.getClass().getMethod(methodName);
 		return method.invoke(target);
+	}
+
+	/**
+	 * 根据字段名获取指定Map的的field字段对应的值
+	 *
+	 * @param target       目标Map对象
+	 * @param field        字段名称
+	 * @param defaultValue 默认值
+	 * @return 返回目标对象的值
+	 */
+	public static Object getFieldValueByName(Map<String, Object> target, String field, Object defaultValue) {
+		Object value = target.get(field);
+		if(value==null){
+			logger.warn("Map对象中找不到对应的值");
+			return defaultValue;
+		}
+		return value;
 	}
 }

@@ -9,10 +9,10 @@ import com.polluxframework.paginator.entity.PageModel;
 import java.io.IOException;
 
 /**
- * @author: zhumin0508
- * @create: 2018/09/12 20:01
- * @modified By:
- * @description: 统一分页的特殊序列号
+ * @author zhumin0508
+ * create 2018/09/12 20:01
+ * modified By
+ * description 统一分页的特殊序列号
  */
 public class PageModelSerializer extends JsonSerializer<PageModel> {
 

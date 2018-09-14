@@ -29,43 +29,42 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- *
  * @author poplar.yfyang
  * @author miemiedev
  */
 public class SqlHelp {
-    private static Logger logger = LoggerFactory.getLogger(SqlHelp.class);
+	private static Logger logger = LoggerFactory.getLogger(SqlHelp.class);
 
-    /**
-     * 查询总纪录数
-     *
-     * @param mappedStatement mapped
-     * @param parameterObject 参数
-     * @param boundSql        boundSql
-     * @param dialect         database dialect
-     * @return 总记录数
-     * @throws java.sql.SQLException sql查询错误
-     */
-    public static int getCount(
+	/**
+	 * 查询总纪录数
+	 *
+	 * @param mappedStatement mapped
+	 * @param parameterObject 参数
+	 * @param boundSql        boundSql
+	 * @param dialect         database dialect
+	 * @return 总记录数
+	 * @throws java.sql.SQLException sql查询错误
+	 */
+	public static int getCount(
 			final MappedStatement mappedStatement, final Transaction transaction, final Object parameterObject,
 			final BoundSql boundSql, Dialect dialect) throws SQLException {
-        final String count_sql = dialect.getCountSQL();
-        logger.debug("Total count SQL [{}] ", count_sql);
-        logger.debug("Total count Parameters: {} ", parameterObject);
+		final String countSql = dialect.getCountSQL();
+		logger.debug("Total count SQL [{}] ", countSql);
+		logger.debug("Total count Parameters: {} ", parameterObject);
 
-        Connection connection = transaction.getConnection();
-        PreparedStatement countStmt = connection.prepareStatement(count_sql);
-        DefaultParameterHandler handler = new DefaultParameterHandler(mappedStatement,parameterObject,boundSql);
-        handler.setParameters(countStmt);
+		Connection connection = transaction.getConnection();
+		PreparedStatement countStmt = connection.prepareStatement(countSql);
+		DefaultParameterHandler handler = new DefaultParameterHandler(mappedStatement, parameterObject, boundSql);
+		handler.setParameters(countStmt);
+		int count = 0;
+		try (ResultSet rs = countStmt.executeQuery()) {
+			if (rs.next()) {
+				count = rs.getInt(1);
+			}
+			logger.debug("Total count: {}", count);
+		}
+		return count;
 
-        ResultSet rs = countStmt.executeQuery();
-        int count = 0;
-        if (rs.next()) {
-            count = rs.getInt(1);
-        }
-        logger.debug("Total count: {}", count);
-        return count;
-
-    }
+	}
 
 }

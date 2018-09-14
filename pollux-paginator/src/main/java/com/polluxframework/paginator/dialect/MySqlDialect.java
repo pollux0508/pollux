@@ -16,7 +16,7 @@ public class MySqlDialect extends Dialect {
 
 	@Override
 	protected String getLimitString(String sql, String offsetName, int offset, String limitName, int limit) {
-		StringBuffer buffer = new StringBuffer(sql.length() + 20).append(sql);
+		StringBuilder buffer = new StringBuilder(sql.length() + 20).append(sql);
 		if (offset > 0) {
 			buffer.append(" limit ?, ?");
 			setPageParameter(offsetName, offset, Integer.class);
