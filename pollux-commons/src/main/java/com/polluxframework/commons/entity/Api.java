@@ -1,5 +1,6 @@
 package com.polluxframework.commons.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,6 +9,16 @@ import java.util.List;
  * modified By:
  */
 public class Api {
+	private static final Response STATUS = new Response("status", "int", "响应状态", true);
+	private static final Response CODE = new Response("code", "String", "响应代码", true);
+	private static final Response MESSAGE = new Response("msg", "String", "响应消息", true);
+	private static final Response DATA = new Response("data", "object", "返回的数据", true);
+	private static final Response PAGE_NO = new Response("data>>pageNo", "int", "当前页面数", true);
+	private static final Response PAGE_SIZE = new Response("data>>pageSize", "int", "每页条数", true);
+	private static final Response TOTAL = new Response("data>>total", "int", "总条数", true);
+	private static final Response TOTAL_PAGE = new Response("data>>totalPage", "int", "总页码数", true);
+	private static final Response PAGE_ROWS = new Response("data>>rows", "array", "返回的分页数据", true);
+	
 	/**
 	 * API的请求路径
 	 */
@@ -23,7 +34,7 @@ public class Api {
 	/**
 	 * API允许的请求方式 http/https
 	 */
-	private String protocol;
+	private String protocol = "http/https";
 	/**
 	 * API允许的请求模式 get/post ..
 	 */
@@ -39,11 +50,15 @@ public class Api {
 	/**
 	 * 参数
 	 */
-	private List<Parameter> parameters;
+	private List<Parameter> parameters = new ArrayList<>();
 	/**
 	 * 返回结果对象
 	 */
-	private List<Response> responses;
+	private List<Response> responses = new ArrayList<>();
+	/**
+	 * 是否分页
+	 */
+	private boolean pagination;
 
 	public String getUrl() {
 		return url;
@@ -110,11 +125,45 @@ public class Api {
 	}
 
 	public List<Response> getResponses() {
-		return responses;
+		String prev = "data>>";
+		List<Response> result = new ArrayList<>(16);
+		result.add(STATUS);
+		result.add(CODE);
+		result.add(MESSAGE);
+		result.add(DATA);
+		if (pagination) {
+			prev = "data>>rows>>";
+			result.add(PAGE_NO);
+			result.add(PAGE_SIZE);
+			result.add(TOTAL);
+			result.add(TOTAL_PAGE);
+			result.add(PAGE_ROWS);
+		}
+		for (Response response : responses) {
+			response.setName(response.getFullName(prev));
+			result.add(response);
+		}
+		return result;
 	}
 
 	public void setResponses(List<Response> responses) {
 		this.responses = responses;
+	}
+
+	public boolean isPagination() {
+		return pagination;
+	}
+
+	public void setPagination(boolean pagination) {
+		this.pagination = pagination;
+	}
+
+	public void addParameter(Parameter parameter) {
+		parameters.add(parameter);
+	}
+
+	public void addResponse(Response response) {
+		responses.add(response);
 	}
 
 	@Override
@@ -129,6 +178,7 @@ public class Api {
 		sb.append(", domain='").append(domain).append('\'');
 		sb.append(", parameters=").append(parameters);
 		sb.append(", responses=").append(responses);
+		sb.append(", pagination=").append(pagination);
 		sb.append('}');
 		return sb.toString();
 	}

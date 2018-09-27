@@ -60,4 +60,15 @@ public class Parameter {
 	public void setRequired(Boolean required) {
 		this.required = required;
 	}
+
+	@Override
+	public String toString() {
+		final StringBuffer sb = new StringBuffer("Parameter{");
+		sb.append("name='").append(name).append('\'');
+		sb.append(", type='").append(type).append('\'');
+		sb.append(", description='").append(description).append('\'');
+		sb.append(", required=").append(required);
+		sb.append('}');
+		return sb.toString();
+	}
 }
