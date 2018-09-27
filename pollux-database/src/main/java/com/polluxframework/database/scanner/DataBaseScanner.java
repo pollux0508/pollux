@@ -1,7 +1,7 @@
-package com.polluxframework.version.scanner;
+package com.polluxframework.database.scanner;
 
 
-import com.polluxframework.version.entity.IModuleVersion;
+import com.polluxframework.database.entity.IModuleVersion;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

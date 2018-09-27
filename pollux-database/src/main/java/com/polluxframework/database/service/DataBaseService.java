@@ -1,4 +1,4 @@
-package com.polluxframework.version.service;
+package com.polluxframework.database.service;
 
 import javax.sql.DataSource;
 import java.io.IOException;

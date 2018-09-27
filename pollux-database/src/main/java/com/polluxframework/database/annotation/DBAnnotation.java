@@ -1,4 +1,4 @@
-package com.polluxframework.version.annotation;
+package com.polluxframework.database.annotation;
 
 import java.lang.annotation.*;
 

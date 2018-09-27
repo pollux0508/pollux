@@ -1,6 +1,6 @@
-package com.polluxframework.version.scanner;
+package com.polluxframework.database.scanner;
 
-import com.polluxframework.version.entity.IModuleVersion;
+import com.polluxframework.database.entity.IModuleVersion;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;

@@ -1,6 +1,5 @@
-package com.polluxframework.version.scanner;
+package com.polluxframework.database.scanner;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -37,7 +36,7 @@ public class DataBasePackageScanner implements BeanDefinitionRegistryPostProcess
 	}
 
 	@Override
-	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry){
 		DataBaseClassPathScanner scanner = new DataBaseClassPathScanner(registry);
 		scanner.setAnnotationClass(this.annotationClass);
 		scanner.setResourceLoader(this.applicationContext);
@@ -47,12 +46,12 @@ public class DataBasePackageScanner implements BeanDefinitionRegistryPostProcess
 	}
 
 	@Override
-	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory){
 		// left intentionally blank
 	}
 
 	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+	public void setApplicationContext(ApplicationContext applicationContext){
 		this.applicationContext = applicationContext;
 	}
 

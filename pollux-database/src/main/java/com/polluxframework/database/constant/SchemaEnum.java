@@ -1,4 +1,4 @@
-package com.polluxframework.version.constant;
+package com.polluxframework.database.constant;
 
 /**
  * 升级模式

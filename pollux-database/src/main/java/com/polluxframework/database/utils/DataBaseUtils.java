@@ -1,6 +1,6 @@
-package com.polluxframework.version.utils;
+package com.polluxframework.database.utils;
 
-import com.polluxframework.version.constant.DataBaseEnum;
+import com.polluxframework.database.constant.DataBaseEnum;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -13,6 +13,9 @@ import java.sql.SQLException;
  * modified By:
  */
 public class DataBaseUtils {
+
+	private DataBaseUtils() {
+	}
 
 	public static DataBaseEnum getDbType(Connection connection) throws SQLException {
 		DatabaseMetaData meta = connection.getMetaData();

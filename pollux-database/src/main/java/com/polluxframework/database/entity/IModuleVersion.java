@@ -1,4 +1,4 @@
-package com.polluxframework.version.entity;
+package com.polluxframework.database.entity;
 
 import java.util.List;
 

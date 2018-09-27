@@ -1,8 +1,7 @@
-package com.polluxframework.version.utils;
+package com.polluxframework.database.utils;
 
-import com.polluxframework.version.constant.DataBaseEnum;
-import com.polluxframework.version.constant.SchemaEnum;
-import com.polluxframework.version.entity.DataBaseVersion;
+import com.polluxframework.database.constant.DataBaseEnum;
+import com.polluxframework.database.constant.SchemaEnum;
 import org.junit.Test;
 
 import java.io.IOException;

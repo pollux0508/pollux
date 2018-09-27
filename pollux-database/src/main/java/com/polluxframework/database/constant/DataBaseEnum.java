@@ -1,4 +1,4 @@
-package com.polluxframework.version.constant;
+package com.polluxframework.database.constant;
 
 /**
  * @author zhumin0508
