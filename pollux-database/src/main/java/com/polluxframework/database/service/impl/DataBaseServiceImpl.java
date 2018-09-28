@@ -84,7 +84,6 @@ public class DataBaseServiceImpl implements DataBaseService {
 		DataBaseEnum dbType = DataBaseUtils.getDbType(connection);
 
 		Set<IModuleVersion> versions = DataBaseScanner.getDataBaseScannerTables();
-		connection.setAutoCommit(false);
 
 		for (IModuleVersion version : versions) {
 			VersionInfo versionInfo = getCurInfo(connection, version);
@@ -100,7 +99,6 @@ public class DataBaseServiceImpl implements DataBaseService {
 			if (!sqlList.isEmpty()) {
 				executeBatch(connection, sqlList);
 				executeModify(connection, version.curVersion(), version.getModule(), versionInfo == null ? null : versionInfo.getHistory(), update);
-				connection.commit();
 			}
 		}
 		try {
