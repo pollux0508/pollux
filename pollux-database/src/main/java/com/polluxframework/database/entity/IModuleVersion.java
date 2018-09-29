@@ -10,6 +10,14 @@ import java.util.List;
  * modified By:
  */
 public interface IModuleVersion {
+
+	/**
+	 * 需要依赖的模块
+	 *
+	 * @return 返回所有依赖的模块名称
+	 */
+	List<String> prevModules();
+
 	/**
 	 * 变更SQL存放根目录
 	 *

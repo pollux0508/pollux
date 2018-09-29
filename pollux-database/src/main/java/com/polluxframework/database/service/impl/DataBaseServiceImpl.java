@@ -15,10 +15,7 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author zhumin0508
@@ -83,28 +80,48 @@ public class DataBaseServiceImpl implements DataBaseService {
 		checkModuleTable(connection);
 		DataBaseEnum dbType = DataBaseUtils.getDbType(connection);
 
-		Set<IModuleVersion> versions = DataBaseScanner.getDataBaseScannerTables();
+		Map<String, IModuleVersion> versions = DataBaseScanner.getDataBaseScannerTables();
 
-		for (IModuleVersion version : versions) {
-			VersionInfo versionInfo = getCurInfo(connection, version);
-			List<String> sqlList;
-			boolean update = false;
-			if (versionInfo == null) {
-				sqlList = ScriptScannerUtils.readScript(version, dbType, SchemaEnum.CREATE, null);
-			} else {
-				update = true;
-				sqlList = getUpdateModuleSql(version, dbType, versionInfo.getVersion());
-			}
+		Set<String> hasInitModules = new LinkedHashSet<>(versions.size());
 
-			if (!sqlList.isEmpty()) {
-				executeBatch(connection, sqlList);
-				executeModify(connection, version.curVersion(), version.getModule(), versionInfo == null ? null : versionInfo.getHistory(), update);
+		for (IModuleVersion version : versions.values()) {
+			if (hasInitModules.contains(version.getModule())) {
+				continue;
 			}
+			initModule(connection, version, dbType, hasInitModules, versions);
 		}
 		try {
 			connection.close();
 		} catch (SQLException e) {
 			logger.info("关闭链接失败!");
+		}
+	}
+
+	private void initModule(Connection connection, IModuleVersion version, DataBaseEnum dbType, Set<String> hasInitModules, Map<String, IModuleVersion> versions) throws SQLException, IOException {
+		if (version != null) {
+			return;
+		}
+		VersionInfo versionInfo = getCurInfo(connection, version);
+		List<String> sqlList;
+		boolean update = false;
+		if (versionInfo == null) {
+			sqlList = ScriptScannerUtils.readScript(version, dbType, SchemaEnum.CREATE, null);
+		} else {
+			update = true;
+			sqlList = getUpdateModuleSql(version, dbType, versionInfo.getVersion());
+		}
+
+		if (!sqlList.isEmpty()) {
+			executeBatch(connection, sqlList);
+			executeModify(connection, version.curVersion(), version.getModule(), versionInfo == null ? null : versionInfo.getHistory(), update);
+		}
+		hasInitModules.add(version.getModule());
+		List<String> prevModules = version.prevModules();
+		if (prevModules != null && (!prevModules.isEmpty())) {
+			for (String module : prevModules) {
+				IModuleVersion bean = versions.get(module);
+				initModule(connection, bean, dbType, hasInitModules, versions);
+			}
 		}
 	}
 

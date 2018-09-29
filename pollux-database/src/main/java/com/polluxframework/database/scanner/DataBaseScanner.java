@@ -3,8 +3,8 @@ package com.polluxframework.database.scanner;
 
 import com.polluxframework.database.entity.IModuleVersion;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author zhumin0508
@@ -12,7 +12,7 @@ import java.util.Set;
  * modified By:
  */
 public final class DataBaseScanner {
-	private static Set<IModuleVersion> tables= new LinkedHashSet<>(64);
+	private static Map<String,IModuleVersion> tables= new HashMap<>(64);
 	private DataBaseScanner(){
 	}
 
@@ -21,14 +21,14 @@ public final class DataBaseScanner {
 	 * @param table 建表脚本的bean
 	 */
 	public static void addDataBaseScannerTable(IModuleVersion table){
-		tables.add(table);
+		tables.put(table.getModule(),table);
 	}
 
 	/**
 	 * 获取所有的建表脚本bean
 	 * @return 建表脚本bean
 	 */
-	public static Set<IModuleVersion> getDataBaseScannerTables(){
+	public static Map<String,IModuleVersion> getDataBaseScannerTables(){
 		return tables;
 	}
 
