@@ -62,6 +62,7 @@ public class PageInterceptor implements Interceptor {
 		}
 
 		if (pageBounds == null || pageBounds.isNoRow()) {
+			logger.debug("不需要使用分页查询");
 			return invocation.proceed();
 		}
 		if (autoDriver) {
@@ -79,13 +80,15 @@ public class PageInterceptor implements Interceptor {
 			count = futureCount.get();
 			pageNo = getCurPageNo(count, pageBounds);
 			pageSql = dialect.getLimitString(pageSql, (pageNo - 1) * pageBounds.getLimit(), pageBounds.getLimit());
+		} else {
+			pageSql = dialect.getLimitString(pageSql, pageBounds.getOffset(), pageBounds.getLimit());
+			logger.debug("强制不控制总条数");
 		}
 		queryArgs[MAPPED_STATEMENT_INDEX] = buildMappedStatement(mappedStatement, pageSql, parameter);
 		queryArgs[ROW_BOUNDS_INDEX] = new RowBounds();
 		Future<List> listFuture = call(() -> (List) invocation.proceed());
-		List list = listFuture.get();
-		PageModel result = new PageModel();
-		result.addAll(list);
+
+		PageModel result = new PageModel(listFuture.get());
 		if (pageBounds.isContainsTotalCount()) {
 			result.setTotal(count);
 			result.setPageNo(pageNo);
@@ -100,7 +103,9 @@ public class PageInterceptor implements Interceptor {
 		if (count < pageBounds.getOffset()) {
 			int limit = pageBounds.getLimit();
 			int pageNo = count % limit == 0 ? count / limit : count / limit + 1;
-			return pageNo < 1 ? 1 : pageNo;
+			pageNo = pageNo < 1 ? 1 : pageNo;
+			logger.info("查询的起始位置大于数据总数，调整当前页面为：{}", pageNo);
+			return pageNo;
 		} else {
 			return pageBounds.getPageNo();
 		}
@@ -164,6 +169,7 @@ public class PageInterceptor implements Interceptor {
 		String dialect = properties.getProperty("dialect");
 		if (dialect == null) {
 			this.autoDriver = true;
+			logger.info("没有配置方言类型则采用自动适配驱动");
 			return;
 		}
 		this.dialectEnum = DialectFactory.getDialectType(dialect);

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.polluxframework.paginator.serializer.PageModelSerializer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,6 +41,11 @@ public class PageModel<E> extends ArrayList<E> {
     public PageModel(int pageNo, int pageSize) {
         this.pageNo = pageNo;
         this.pageSize = pageSize;
+    }
+
+
+    public PageModel(Collection<? extends E> c) {
+        super(c);
     }
 
     /**
