@@ -9,23 +9,13 @@ public enum DialectEnum {
 	/**
 	 * MySQL
 	 */
-	MYSQL("mysql"),
+	MYSQL,
 	/**
 	 * Oracle
 	 */
-	ORACLE("oracle"),
+	ORACLE,
 	/**
 	 * DB2
 	 */
-	DB2("db2");
-
-	private String type;
-
-	DialectEnum(String type) {
-		this.type = type;
-	}
-
-	public String getType() {
-		return type;
-	}
+	DB2
 }

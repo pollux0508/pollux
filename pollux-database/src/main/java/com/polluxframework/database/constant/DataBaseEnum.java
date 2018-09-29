@@ -9,38 +9,20 @@ public enum DataBaseEnum {
 	/**
 	 * Mysql
 	 */
-	MYSQL("MySQL", "mysql"),
+	MYSQL,
 	/**
 	 * oracle
 	 */
-	ORACLE("ORACLE", "oracle"),
+	ORACLE,
 	/**
 	 * DB2
 	 */
-	DB2("DB2", "db2");
-	/**
-	 * 数据库类型
-	 */
-	private String name;
-	/**
-	 * 数据库名称小写
-	 */
-	private String lowCase;
+	DB2;
 
-	DataBaseEnum(String name, String lowCase) {
-		this.name = name;
-		this.lowCase = lowCase;
+	DataBaseEnum() {
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public String getLowCase() {
-		return lowCase;
-	}
-
-	public boolean match(String dbType) {
-		return this.name.equals(dbType);
+	public String getLowCase(){
+		return this.name().toLowerCase();
 	}
 }

@@ -12,9 +12,6 @@ public abstract class Dialect {
 	private String pageSQL;
 	private String countSQL;
 
-	public Dialect() {
-	}
-
 	public void build(MappedStatement mappedStatement, Object parameterObject) {
 		BoundSql boundSql = mappedStatement.getBoundSql(parameterObject);
 		pageSQL = boundSql.getSql();

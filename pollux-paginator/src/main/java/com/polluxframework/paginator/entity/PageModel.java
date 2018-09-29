@@ -1,7 +1,7 @@
 package com.polluxframework.paginator.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.polluxframework.paginator.support.PageModelSerializer;
+import com.polluxframework.paginator.serializer.PageModelSerializer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
