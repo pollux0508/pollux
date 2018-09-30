@@ -1,4 +1,5 @@
-package com.polluxframework.database.utils;
+package com.polluxframework.entity;
+
 
 import com.polluxframework.database.annotation.DBAnnotation;
 import com.polluxframework.database.entity.IModuleVersion;
@@ -6,14 +7,13 @@ import com.polluxframework.database.entity.IModuleVersion;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * @author zhumin0508
- * created in  2018/9/26 15:18
+ * created in  2018/9/26 17:21
  * modified By:
  */
 @DBAnnotation
-public class DataBaseVersion implements IModuleVersion {
+public class AmsVersion implements IModuleVersion {
 	protected static final List<String> HISTORY_VERSIONS = new ArrayList<>();
 	protected static final String ROOT_PATH = "com/polluxframework/db";
 
@@ -21,6 +21,7 @@ public class DataBaseVersion implements IModuleVersion {
 		HISTORY_VERSIONS.add("1.0.0");
 		HISTORY_VERSIONS.add("1.0.1");
 		HISTORY_VERSIONS.add("1.0.2");
+		HISTORY_VERSIONS.add("1.0.3");
 	}
 
 	@Override
@@ -35,17 +36,16 @@ public class DataBaseVersion implements IModuleVersion {
 
 	@Override
 	public String getModule() {
-		return "base";
+		return "ams";
 	}
 
 	@Override
 	public String curVersion() {
-		return "1.0.2";
+		return "1.0.3";
 	}
 
 	@Override
 	public List<String> getHistoryVersion() {
 		return HISTORY_VERSIONS;
 	}
-
 }

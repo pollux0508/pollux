@@ -15,6 +15,13 @@ public class TestParam {
     private String name;
     private List<String> values = new ArrayList<>(8);
 
+    public TestParam() {
+    }
+
+    public TestParam(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

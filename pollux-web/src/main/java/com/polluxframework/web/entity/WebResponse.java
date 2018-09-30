@@ -1,6 +1,5 @@
 package com.polluxframework.web.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.polluxframework.web.constant.WebConstant;
 
 /**
@@ -8,7 +7,6 @@ import com.polluxframework.web.constant.WebConstant;
  * created in  2018/5/10 15:22
  * modified By:
  */
-@JsonSerialize(using = WebResponseSerializer.class)
 public final class WebResponse {
     /**
      * 1开头的http状态码 表示临时响应并需要请求者继续执行操作的状态代码。

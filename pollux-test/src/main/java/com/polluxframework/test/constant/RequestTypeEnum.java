@@ -1,5 +1,9 @@
 package com.polluxframework.test.constant;
 
+/**
+ * @author zhumin0508
+ */
+
 public enum RequestTypeEnum {
     /**
      * Post方式
