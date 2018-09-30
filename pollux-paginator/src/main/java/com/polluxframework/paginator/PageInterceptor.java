@@ -92,9 +92,7 @@ public class PageInterceptor implements Interceptor {
 		if (pageBounds.isContainsTotalCount()) {
 			result.setTotal(count);
 			result.setPageNo(pageNo);
-			int limit = pageBounds.getLimit();
-			result.setTotalPage(count % limit == 0 ? count / limit : count / limit + 1);
-			result.setPageSize(limit);
+			result.setPageSize( pageBounds.getLimit());
 		}
 		return result;
 	}
