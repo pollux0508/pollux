@@ -84,15 +84,20 @@ public class PageInterceptor implements Interceptor {
 			pageSql = dialect.getLimitString(pageSql, pageBounds.getOffset(), pageBounds.getLimit());
 			logger.debug("强制不控制总条数");
 		}
-		queryArgs[MAPPED_STATEMENT_INDEX] = buildMappedStatement(mappedStatement, pageSql, parameter);
-		queryArgs[ROW_BOUNDS_INDEX] = new RowBounds();
-		Future<List> listFuture = call(() -> (List) invocation.proceed());
+		PageModel result;
+		if (count > 0) {
+			queryArgs[MAPPED_STATEMENT_INDEX] = buildMappedStatement(mappedStatement, pageSql, parameter);
+			queryArgs[ROW_BOUNDS_INDEX] = new RowBounds();
+			Future<List> listFuture = call(() -> (List) invocation.proceed());
+			result = new PageModel(listFuture.get());
+		}else{
+			result = new PageModel();
+		}
 
-		PageModel result = new PageModel(listFuture.get());
 		if (pageBounds.isContainsTotalCount()) {
 			result.setTotal(count);
 			result.setPageNo(pageNo);
-			result.setPageSize( pageBounds.getLimit());
+			result.setPageSize(pageBounds.getLimit());
 		}
 		return result;
 	}

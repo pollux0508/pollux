@@ -25,4 +25,5 @@ public class UserController extends BaseController {
 	public WebResponse getUserList(User user) {
 		return new WebResponse("查询成功", userService.getUserList(user));
 	}
+
 }
