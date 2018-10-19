@@ -35,6 +35,8 @@ public class DataBaseServiceImpl implements DataBaseService {
 
 	private static final String MODULE_UPDATE_SQL = "UPDATE PX_MODULE_VERSION SET VERSION=?,HISTORY=? WHERE MODULE_NAME=?";
 
+	private static final int HISTORY_SIZE = 300;
+
 	private DataSource dataSource;
 
 	private void checkModuleTable(Connection connection) throws SQLException {
@@ -159,6 +161,10 @@ public class DataBaseServiceImpl implements DataBaseService {
 		if (update) {
 			sql = MODULE_UPDATE_SQL;
 			historyStr = history + " update to (" + version + ")";
+		}
+		int size = historyStr.length();
+		if (size > HISTORY_SIZE) {
+			historyStr = historyStr.substring(size - 301);
 		}
 		try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 			preparedStatement.setString(1, version);
