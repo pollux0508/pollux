@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.polluxframework.paginator.entity.PageModel;
+import com.polluxframework.paginator.entity.PageList;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.IOException;
@@ -16,12 +16,12 @@ import java.util.*;
  * created in  2018/9/30 8:28
  * modified By:
  */
-public class HZPageModelMapper extends ObjectMapper {
-	public HZPageModelMapper() {
+public class PageModelMapper extends ObjectMapper {
+	public PageModelMapper() {
 		this(JsonInclude.Include.NON_NULL);
 	}
 
-	public HZPageModelMapper(boolean notNull) {
+	public PageModelMapper(boolean notNull) {
 		if (notNull) {
 			this.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		} else {
@@ -31,7 +31,7 @@ public class HZPageModelMapper extends ObjectMapper {
 		this.init();
 	}
 
-	public HZPageModelMapper(JsonInclude.Include include) {
+	public PageModelMapper(JsonInclude.Include include) {
 		if (include != null) {
 			this.setSerializationInclusion(include);
 		}
@@ -42,9 +42,9 @@ public class HZPageModelMapper extends ObjectMapper {
 	private void init() {
 		SimpleModule module = new SimpleModule("WebResponseModule");
 
-		module.addSerializer(PageModel.class, new JsonSerializer<PageModel>() {
+		module.addSerializer(PageList.class, new JsonSerializer<PageList>() {
 			@Override
-			public void serialize(PageModel value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+			public void serialize(PageList value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
 				Map<String, Object> map = new HashMap<>(8);
 				map.put("pageNo", value.getPageNo());
 				map.put("pageSize", value.getPageSize());

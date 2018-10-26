@@ -126,7 +126,7 @@ public abstract class AbstractRoutingDataSource extends AbstractDataSource imple
 	 * @return the resolved DataSource (never {@code null})
 	 * @throws IllegalArgumentException in case of an unsupported value type
 	 */
-	protected DataSource resolveSpecifiedDataSource(Object dataSource){
+	protected DataSource resolveSpecifiedDataSource(Object dataSource) {
 		if (dataSource instanceof DataSource) {
 			return (DataSource) dataSource;
 		} else if (dataSource instanceof String) {
@@ -175,8 +175,12 @@ public abstract class AbstractRoutingDataSource extends AbstractDataSource imple
 		Assert.notNull(this.resolvedDataSources, "DataSource router not initialized");
 		Object lookupKey = determineCurrentLookupKey();
 		DataSource dataSource = this.resolvedDataSources.get(lookupKey);
-		if (dataSource == null&&(this.lenientFallback || lookupKey == null) ) {
+		if (dataSource == null) {
+			if (this.lenientFallback || lookupKey == null) {
 				dataSource = this.resolvedDefaultDataSource;
+			} else {
+				throw new IllegalStateException("Cannot determine target DataSource for lookup key [" + lookupKey + "]");
+			}
 		}
 		if (dataSource == null) {
 			throw new IllegalStateException("Cannot determine target DataSource for lookup key [" + lookupKey + "]");
@@ -185,11 +189,9 @@ public abstract class AbstractRoutingDataSource extends AbstractDataSource imple
 	}
 
 	/**
-	 * Determine the current lookup key. This will typically be
-	 * implemented to check a thread-bound transaction context.
-	 * <p>Allows for arbitrary keys. The returned key needs
-	 * to match the stored lookup key type, as resolved by the
-	 * {@link #resolveSpecifiedLookupKey} method.
+	 * 获取当前设定的数据库标识值
+	 *
+	 * @return 返回当前设定标识值
 	 */
 	protected abstract Object determineCurrentLookupKey();
 

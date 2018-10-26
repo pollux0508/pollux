@@ -2,7 +2,7 @@ package com.polluxframework.mapper;
 
 import com.polluxframework.entity.User;
 import com.polluxframework.paginator.entity.PageBounds;
-import com.polluxframework.paginator.entity.PageModel;
+import com.polluxframework.paginator.entity.PageList;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 public interface UserMapper {
 	/**
 	 * 通过唯一标识获取用户信息
+	 *
 	 * @param user 用户对象（唯一标识有ID  USER_CODE LOGIN_NAME）
 	 * @return 用户对象
 	 */
@@ -23,8 +24,9 @@ public interface UserMapper {
 	/**
 	 * 分页获取用户信息
 	 *
-	 * @param user 用户查询字段
+	 * @param user       用户查询字段
+	 * @param pageBounds 分页情况
 	 * @return 分页的用户列表信息
 	 */
-	PageModel<User> getUserList(PageBounds pageBounds);
+	PageList<User> getUserList(User user, PageBounds pageBounds);
 }
