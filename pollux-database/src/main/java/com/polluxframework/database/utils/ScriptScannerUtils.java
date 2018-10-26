@@ -45,6 +45,9 @@ public class ScriptScannerUtils {
 	}
 
 	public static List<String> readScript(Reader reader) throws IOException {
+		if(reader==null){
+			throw new IllegalStateException("无法获取脚本文件");
+		}
 		List<String> sqlList = new ArrayList<>(16);
 		StringBuilder command = new StringBuilder();
 		LineNumberReader lineReader = new LineNumberReader(reader);

@@ -133,6 +133,7 @@ public class DataBaseServiceImpl implements DataBaseService {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
 					VersionInfo versionInfo = new VersionInfo();
+					versionInfo.setModule(version.getModule());
 					versionInfo.setVersion(resultSet.getString(1));
 					versionInfo.setHistory(resultSet.getString(2));
 					return versionInfo;
@@ -194,8 +195,17 @@ public class DataBaseServiceImpl implements DataBaseService {
 }
 
 class VersionInfo {
+	private String module;
 	private String version;
 	private String history;
+
+	public String getModule() {
+		return module;
+	}
+
+	public void setModule(String module) {
+		this.module = module;
+	}
 
 	public String getVersion() {
 		return version;
