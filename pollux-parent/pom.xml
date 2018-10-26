@@ -50,13 +50,13 @@
 		<aspectj.version>1.8.4</aspectj.version>
 		<cglib.version>3.2.5</cglib.version>
 		<mysql.driver.version>5.1.38</mysql.driver.version>
-		<servlet.version>3.0-alpha-1</servlet.version>
+		<servlet.version>4.0.1</servlet.version>
 		<poi.version>3.15</poi.version>
 		<commons-beanutils.version>1.9.3</commons-beanutils.version>
 		<commons-collections.version>3.2.2</commons-collections.version>
 		<commons-codec.version>1.11</commons-codec.version>
 		<commons-dbcp2.version>2.1.1</commons-dbcp2.version>
-		<commons-digester3.version>3.2</commons-digester3.version>
+		<commons-digester.version>2.1</commons-digester.version>
 		<commons-pool2.version>2.4.3</commons-pool2.version>
 		<commons-email.version>1.5</commons-email.version>
 		<commons-net.version>3.6</commons-net.version>
@@ -90,6 +90,7 @@
 		<netty.version>4.1.25.Final</netty.version>
 		<httpclient.version>4.5.5</httpclient.version>
 		<logback.version>1.2.3</logback.version>
+		<reflections.version>0.9.11</reflections.version>
 		<!-- 框架Jar包版本控制 END  -->
 	</properties>
 	<dependencyManagement>
@@ -174,9 +175,8 @@
 			<!-- servlet -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
-				<artifactId>servlet-api</artifactId>
+				<artifactId>javax.servlet-api</artifactId>
 				<version>${servlet.version}</version>
-				<scope>provided</scope>
 			</dependency>
 			<!-- poi -->
 			<dependency>
@@ -204,12 +204,6 @@
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
 				<version>${commons-beanutils.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>commons-collections</groupId>
@@ -228,14 +222,8 @@
 			</dependency>
 			<dependency>
 				<groupId>commons-digester</groupId>
-				<artifactId>commons-digester3</artifactId>
-				<version>${commons-digester3.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
+				<artifactId>commons-digester</artifactId>
+				<version>${commons-digester.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
@@ -275,26 +263,6 @@
 			<dependency>
 				<groupId>com.atomikos</groupId>
 				<artifactId>transactions</artifactId>
-				<version>${atomikos.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.atomikos</groupId>
-				<artifactId>transactions-api</artifactId>
-				<version>${atomikos.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.atomikos</groupId>
-				<artifactId>atomikos-util</artifactId>
-				<version>${atomikos.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.atomikos</groupId>
-				<artifactId>transactions-jta</artifactId>
-				<version>${atomikos.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.atomikos</groupId>
-				<artifactId>transactions-jdbc</artifactId>
 				<version>${atomikos.version}</version>
 			</dependency>
 			<dependency>
@@ -411,11 +379,6 @@
 				<version>${ehcache-web.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.github.miemiedev</groupId>
-				<artifactId>mybatis-paginator</artifactId>
-				<version>${mybatis-paginator.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.activiti</groupId>
 				<artifactId>activiti-modeler</artifactId>
 				<version>${activiti.version}</version>
@@ -459,6 +422,11 @@
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-core</artifactId>
 				<version>${logback.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.reflections</groupId>
+				<artifactId>reflections</artifactId>
+				<version>${reflections.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -747,7 +715,7 @@
 								<include>org.aspectj:aspectjweaver:${aspectj.version}</include>
 								<include>cglib:*:${cglib.version}</include>
 								<include>mysql:mysql-connector-java:${mysql.driver.version}</include>
-								<include>javax.servlet:servlet-api:${servlet.version}</include>
+								<include>javax.servlet:javax.servlet-api:${servlet.version}</include>
 								<include>javax.servlet:jstl:${jstl.version}</include>
 								<include>org.apache.poi:*:${poi.version}</include>
 								<include>commons-beanutils:commons-beanutils:${commons-beanutils.version}</include>
@@ -758,7 +726,7 @@
 								<include>org.apache.commons:commons-lang3:${commons-lang3.version}</include>
 								<include>org.apache.commons:commons-text:${commons-text.version}</include>
 								<include>org.apache.commons:commons-email:${commons-email.version}</include>
-								<include>commons-digester:commons-digester3:${commons-digester3.version}</include>
+								<include>commons-digester:commons-digester:${commons-digester.version}</include>
 								<include>commons-net:commons-net:${commons-net.version}</include>
 								<include>commons-io:commons-io:${commons-io.version}</include>
 								<include>commons-fileupload:commons-fileupload:${commons-fileupload.version}</include>
@@ -770,7 +738,6 @@
 								<include>com.google.guava:guava:${guava.version}</include>
 								<include>com.ckfinder:*:${ckfinder.version}</include>
 								<include>org.activiti:*:${activiti.version}</include>
-								<include>com.github.miemiedev:mybatis-paginator:${mybatis-paginator.version}</include>
 								<include>jaxen:*:${jaxen.version}</include>
 								<include>ch.qos.logback:*:${logback.version}</include>
 							</includes>
