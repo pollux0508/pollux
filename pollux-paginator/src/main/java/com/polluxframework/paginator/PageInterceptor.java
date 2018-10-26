@@ -3,7 +3,7 @@ package com.polluxframework.paginator;
 import com.polluxframework.paginator.constant.DialectEnum;
 import com.polluxframework.paginator.dialect.Dialect;
 import com.polluxframework.paginator.entity.PageBounds;
-import com.polluxframework.paginator.entity.PageModel;
+import com.polluxframework.paginator.entity.PageList;
 import com.polluxframework.paginator.support.DialectFactory;
 import com.polluxframework.paginator.support.SqlHelp;
 import org.apache.ibatis.builder.StaticSqlSource;
@@ -73,25 +73,25 @@ public class PageInterceptor implements Interceptor {
 
 		int count = 0;
 		int pageNo = 0;
+		int offset = pageBounds.getOffset();
 		String pageSql = dialect.getPageSQL();
 		if (!pageBounds.getForceNoCount()) {
 			Callable<Integer> countTask = () -> SqlHelp.getCount(mappedStatement, executor.getTransaction(), parameter, mappedStatement.getBoundSql(parameter), dialect);
 			Future<Integer> futureCount = call(countTask);
 			count = futureCount.get();
 			pageNo = getCurPageNo(count, pageBounds);
-			pageSql = dialect.getLimitString(pageSql, (pageNo - 1) * pageBounds.getLimit(), pageBounds.getLimit());
-		} else {
-			pageSql = dialect.getLimitString(pageSql, pageBounds.getOffset(), pageBounds.getLimit());
-			logger.debug("强制不控制总条数");
+			offset = (pageNo - 1) * pageBounds.getLimit();
 		}
-		PageModel result;
+		pageSql = dialect.getLimitString(pageSql, offset, pageBounds.getLimit());
+
+		PageList result;
 		if (count > 0) {
 			queryArgs[MAPPED_STATEMENT_INDEX] = buildMappedStatement(mappedStatement, pageSql, parameter);
 			queryArgs[ROW_BOUNDS_INDEX] = new RowBounds();
 			Future<List> listFuture = call(() -> (List) invocation.proceed());
-			result = new PageModel(listFuture.get());
-		}else{
-			result = new PageModel();
+			result = new PageList(listFuture.get());
+		} else {
+			result = new PageList();
 		}
 
 		if (pageBounds.isContainsTotalCount()) {

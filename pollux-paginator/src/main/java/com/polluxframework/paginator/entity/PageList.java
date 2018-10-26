@@ -11,7 +11,7 @@ import java.util.Iterator;
  * created in  2017/12/18 13:25
  * modified By:
  */
-public class PageModel<E> extends ArrayList<E> {
+public class PageList<E> extends ArrayList<E> {
 
 	/**
 	 * 当前页码数
@@ -26,17 +26,23 @@ public class PageModel<E> extends ArrayList<E> {
 	 */
 	private int total = 0;
 
-	public PageModel() {
+	public PageList() {
 	}
 
-	public PageModel(int pageNo, int pageSize) {
+	public PageList(int pageNo, int pageSize) {
 		this.pageNo = pageNo;
 		this.pageSize = pageSize;
 	}
 
 
-	public PageModel(Collection<? extends E> c) {
+	public PageList(Collection<? extends E> c) {
 		super(c);
+	}
+
+	public PageList(Collection<? extends E> c,int pageNo, int pageSize) {
+		super(c);
+		this.pageNo = pageNo;
+		this.pageSize = pageSize;
 	}
 
 	/**
