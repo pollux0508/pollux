@@ -32,7 +32,6 @@
 			<groupId>com.polluxframework</groupId>
 			<artifactId>pollux-commons</artifactId>
 			<version>${pollux-frame.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
