@@ -1,6 +1,5 @@
 package com.polluxframework.commons.utils;
 
-import com.polluxframework.commons.entity.Pagination;
 import com.polluxframework.test.AbstractNoTransactionalTest;
 import com.polluxframework.test.utils.WebTestSingleUtils;
 import org.junit.Assert;
@@ -8,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 
 /**
@@ -31,34 +29,4 @@ public class SessionUtilsTest extends AbstractNoTransactionalTest {
 		Assert.assertEquals("zhumin", userId);
 	}
 
-
-	@Test
-	public void setPagination() {
-		Pagination pagination = new Pagination();
-		pagination.setPageKey("zhumin");
-		pagination.setPageNo(20);
-		SessionUtils.setPagination(request, pagination);
-		Pagination result = SessionUtils.getPagination(request, new Pagination("zhumin"));
-		Assert.assertEquals(pagination, result);
-
-		result = SessionUtils.getPagination(request, new Pagination("caocao"));
-		Assert.assertNotEquals(pagination, result);
-		Assert.assertEquals(Integer.valueOf(10), result.getPageSize());
-		Assert.assertEquals(Integer.valueOf(1), result.getPageNo());
-
-		HttpSession session = request.getSession();
-		session.setAttribute("currentPagination",1);
-		result = SessionUtils.getPagination(request);
-		Assert.assertNull(result);
-
-		result = SessionUtils.getPagination(request,new Pagination("caocao"));
-		Assert.assertNotEquals(pagination, result);
-		Assert.assertEquals(Integer.valueOf(10), result.getPageSize());
-		Assert.assertEquals(Integer.valueOf(1), result.getPageNo());
-	}
-
-	@Test
-	public void clearPagination() {
-		SessionUtils.clearPagination(request);
-	}
 }

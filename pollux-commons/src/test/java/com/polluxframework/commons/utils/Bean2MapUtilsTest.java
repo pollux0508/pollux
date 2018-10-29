@@ -1,6 +1,6 @@
 package com.polluxframework.commons.utils;
 
-import com.polluxframework.commons.entity.Pagination;
+import com.polluxframework.commons.entity.TextLabel;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,9 +16,10 @@ public class Bean2MapUtilsTest {
 
 	@Test
 	public void beanToMap() {
-		Pagination pagination = new Pagination();
+		TextLabel pagination = new TextLabel();
+		pagination.setIndexPos(1);
 		Map<String, Object> map = Bean2MapUtils.beanToMap(pagination);
-		Assert.assertEquals(1,map.get("pageNo"));
+		Assert.assertEquals(1,map.get("indexPos"));
 
 		pagination = null;
 		map = Bean2MapUtils.beanToMap(pagination);
@@ -31,9 +32,8 @@ public class Bean2MapUtilsTest {
 		Map<String, Object> map= new HashMap<>();
 		map.put("pageKey","zhumin");
 		map.put("pageNo",20);
-		Pagination pagination = new Pagination();
+		TextLabel pagination = new TextLabel();
 		pagination=Bean2MapUtils.mapToBean(map,pagination);
-		Assert.assertEquals("zhumin",pagination.getPageKey());
-		Assert.assertEquals(Integer.valueOf(20),pagination.getPageNo());
+		Assert.assertEquals(0,pagination.getIndexPos());
 	}
 }

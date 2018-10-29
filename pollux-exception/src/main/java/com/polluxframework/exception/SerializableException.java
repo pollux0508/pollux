@@ -8,7 +8,7 @@ package com.polluxframework.exception;
  */
 public final class SerializableException extends BaseRuntimeException {
 
-	private static final String CODE = "PXKFSE000";
+	private static final String CODE = "POLLUX000";
 
 	public SerializableException() {
 		super(CODE, "对象未实现序列化，请联系管理人员确认!");

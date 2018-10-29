@@ -6,7 +6,7 @@ package com.polluxframework.web.constant;
  * modified By:
  */
 public class WebConstant {
-	private WebConstant(){
+	private WebConstant() {
 
 	}
 
@@ -25,19 +25,25 @@ public class WebConstant {
 	/**
 	 * 响应默认错误信息
 	 */
+	public static final String DEFAULT_SUCCESS_MESSAGE = "操作成功";
+	/**
+	 * 响应默认错误信息
+	 */
 	public static final String DEFAULT_ERROR_MESSAGE = "系统异常,请联系系统管理员";
+	/**
+	 * 响应状态 成功
+	 */
+	public static final int DEFAULT_SUCCESS_STATUS = 200;
+	/**
+	 * 响应状态 失败
+	 */
+	public static final int DEFAULT_FAIL_STATUS = -1;
+
 	/**
 	 * 响应未知错误信息
 	 */
 	public static final String UNKNOWN_ERROR = "未知错误，请联系系统管理员";
-	/**
-	 * 响应状态 成功
-	 */
-	public static final int RESPONSE_STATUS_SUCCESS = 200;
-	/**
-	 * 响应状态 失败
-	 */
-	public static final int RESPONSE_STATUS_FAIL = 600;
+
 	/**
 	 * 用户未登录错误码
 	 */

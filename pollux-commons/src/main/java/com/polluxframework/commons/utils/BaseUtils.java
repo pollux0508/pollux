@@ -3,7 +3,10 @@ package com.polluxframework.commons.utils;
 import com.polluxframework.commons.constant.Constants;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,8 +18,42 @@ import java.util.List;
  * modified By:
  */
 public class BaseUtils {
+	private static final Logger logger = LoggerFactory.getLogger(BaseUtils.class);
+
+	private static final String UNKNOWN = "unknown";
+
 	private BaseUtils() {
 
+	}
+
+	/**
+	 * 获取请求的IP地址
+	 *
+	 * @param request 请求
+	 * @return 返回IP地址
+	 */
+	public static String getIPAddress(HttpServletRequest request) {
+		String ip = request.getHeader("x-forwarded-for");
+		if (isEmptyIp(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (isEmptyIp(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (isEmptyIp(ip)) {
+			ip = request.getHeader("HTTP_CLIENT_IP");
+		}
+		if (isEmptyIp(ip)) {
+			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+		}
+		if (isEmptyIp(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		return ip;
+	}
+
+	private static boolean isEmptyIp(String ip) {
+		return StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip);
 	}
 
 	/**

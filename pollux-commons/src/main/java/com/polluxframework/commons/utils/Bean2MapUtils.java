@@ -1,6 +1,6 @@
 package com.polluxframework.commons.utils;
 
-import net.sf.cglib.beans.BeanMap;
+import org.springframework.cglib.beans.BeanMap;
 
 import java.util.HashMap;
 import java.util.Iterator;
