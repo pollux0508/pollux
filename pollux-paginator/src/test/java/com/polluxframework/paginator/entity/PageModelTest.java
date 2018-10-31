@@ -19,7 +19,7 @@ public class PageModelTest {
         System.out.println(Boolean.valueOf("TRUE"));
         System.out.println(Boolean.valueOf("false"));
 
-        PageModel<PageBounds> pageModel = new PageModel<>();
+        PageList<PageBounds> pageModel = new PageList<>();
         System.out.println(pageModel);
 
         ObjectMapper objectMapper = new ObjectMapper();

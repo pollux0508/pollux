@@ -91,6 +91,7 @@
 		<httpclient.version>4.5.5</httpclient.version>
 		<logback.version>1.2.3</logback.version>
 		<reflections.version>0.9.11</reflections.version>
+		<fastdfs.version>1.27-SNAPSHOT</fastdfs.version>
 		<!-- 框架Jar包版本控制 END  -->
 	</properties>
 	<dependencyManagement>
@@ -427,6 +428,11 @@
 				<groupId>org.reflections</groupId>
 				<artifactId>reflections</artifactId>
 				<version>${reflections.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.csource</groupId>
+				<artifactId>fastdfs-client-java</artifactId>
+				<version>${fastdfs.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

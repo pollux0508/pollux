@@ -2,10 +2,10 @@ package com.polluxframework.web.filter;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.polluxframework.commons.constant.Constants;
+import com.polluxframework.common.constant.Constants;
 import com.polluxframework.web.constant.WebConstant;
 import com.polluxframework.web.entity.WebResponse;
-import com.polluxframework.web.utils.RequestUtils;
+import com.polluxframework.web.util.RequestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.polluxframework.commons.utils.StringUtils.isContains;
+import static com.polluxframework.common.util.StringUtils.isContains;
 
 /**
  * @author zhumin0508

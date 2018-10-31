@@ -6,8 +6,8 @@ import com.polluxframework.database.datasource.AbstractRoutingDataSource;
 import com.polluxframework.database.entity.IModuleVersion;
 import com.polluxframework.database.scanner.DataBaseScanner;
 import com.polluxframework.database.service.DataBaseService;
-import com.polluxframework.database.utils.DataBaseUtils;
-import com.polluxframework.database.utils.ScriptScannerUtils;
+import com.polluxframework.database.util.DataBaseUtils;
+import com.polluxframework.database.util.ScriptScannerUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
