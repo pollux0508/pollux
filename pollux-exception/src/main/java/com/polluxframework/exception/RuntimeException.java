@@ -6,7 +6,7 @@ package com.polluxframework.exception;
  * created in  2018/5/10 9:37
  * modified By:
  */
-public class BaseRuntimeException extends RuntimeException implements IException {
+public class RuntimeException extends java.lang.RuntimeException implements IException {
 	/**
 	 * 异常代码
 	 */
@@ -16,13 +16,13 @@ public class BaseRuntimeException extends RuntimeException implements IException
 	 */
 	private final String msg;
 
-	public BaseRuntimeException(String code, String msg) {
+	public RuntimeException(String code, String msg) {
 		this.code = code;
 		this.msg = msg;
 		initCause(new Throwable(msg));
 	}
 
-	public BaseRuntimeException(String code, String msg, Exception e) {
+	public RuntimeException(String code, String msg, Exception e) {
 		this.code = code;
 		this.msg = msg;
 		initCause(e);

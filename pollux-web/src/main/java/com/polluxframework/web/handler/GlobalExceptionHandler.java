@@ -1,6 +1,6 @@
 package com.polluxframework.web.handler;
 
-import com.polluxframework.exception.BaseRuntimeException;
+import com.polluxframework.exception.RuntimeException;
 import com.polluxframework.exception.SerializableException;
 import com.polluxframework.web.entity.WebResponse;
 import org.slf4j.Logger;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GlobalExceptionHandler {
 	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class.getPackage().getName());
 
-	@ExceptionHandler(BaseRuntimeException.class)
-	public WebResponse handlerPXRuntimeException(BaseRuntimeException e) {
+	@ExceptionHandler(RuntimeException.class)
+	public WebResponse handlerPXRuntimeException(RuntimeException e) {
 		logger.error("运行异常,错误码:{}，错误信息：{}", e.getCode(), e.getMsg(), e);
 		return WebResponse.error(e.getCode(), e.getMsg());
 	}

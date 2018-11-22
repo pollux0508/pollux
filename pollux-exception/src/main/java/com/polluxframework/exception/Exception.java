@@ -5,7 +5,7 @@ package com.polluxframework.exception;
  * created in  2018/8/8 9:11
  * modified By:
  */
-public class BaseException extends Exception implements IException {
+public class Exception extends java.lang.Exception implements IException {
 	/**
 	 * 异常代码
 	 */
@@ -15,13 +15,13 @@ public class BaseException extends Exception implements IException {
 	 */
 	private final String msg;
 
-	public BaseException(String code, String msg) {
+	public Exception(String code, String msg) {
 		this.code = code;
 		this.msg = msg;
 		initCause(new Throwable(msg));
 	}
 
-	public BaseException(String code, String msg, Exception e) {
+	public Exception(String code, String msg, java.lang.Exception e) {
 		this.code = code;
 		this.msg = msg;
 		initCause(e);

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.polluxframework.common.constant.DateEnum;
-import com.polluxframework.exception.BaseRuntimeException;
+import com.polluxframework.exception.RuntimeException;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.text.StringEscapeUtils;
 
@@ -60,9 +60,9 @@ public class JacksonMapper extends ObjectMapper {
 								return DateUtils.parseDate(text, DateEnum.getAllDateFormat());
 							}
 						} catch (IOException e) {
-							throw new BaseRuntimeException("500", "获取参数有误");
+							throw new RuntimeException("500", "获取参数有误");
 						} catch (ParseException e1) {
-							throw new BaseRuntimeException("500", "参数传递有误，这里需要一个日期类型的字符串！");
+							throw new RuntimeException("500", "参数传递有误，这里需要一个日期类型的字符串！");
 						}
 
 					}

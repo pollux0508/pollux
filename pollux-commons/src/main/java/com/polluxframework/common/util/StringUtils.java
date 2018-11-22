@@ -92,4 +92,21 @@ public class StringUtils {
 		}
 		return result;
 	}
+
+	/**
+	 * 小写第一个字母
+	 *
+	 * @param str 需要小写的字母
+	 * @return 返回小写第一个字母的字符串
+	 */
+	public static String toLowerCaseFirstLetter(String str) {
+		String result = str;
+		if (str != null && !"".equals(str)) {
+			result = str.substring(0, 1).toLowerCase();
+			if (str.length() > 1) {
+				result = result + str.substring(1);
+			}
+		}
+		return result;
+	}
 }
