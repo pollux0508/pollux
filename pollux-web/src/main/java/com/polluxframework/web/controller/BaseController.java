@@ -1,7 +1,7 @@
 package com.polluxframework.web.controller;
 
 import com.polluxframework.common.constant.DateEnum;
-import com.polluxframework.exception.RuntimeException;
+import com.polluxframework.exception.impl.CoreException;
 import com.polluxframework.web.constant.WebConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -43,7 +43,7 @@ public class BaseController {
 					try {
 						setValue(DateUtils.parseDate(text, DateEnum.getAllDateFormat()));
 					} catch (ParseException e) {
-						throw new RuntimeException(WebConstant.DEFAULT_ERROR_CODE, "参数传递有误，这里需要一个日期类型的字符串！");
+						throw new CoreException(WebConstant.DEFAULT_ERROR_CODE, "参数传递有误，这里需要一个日期类型的字符串！");
 					}
 				} else {
 					setValue(null);

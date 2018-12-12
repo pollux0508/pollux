@@ -9,8 +9,9 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>pollux-database</artifactId>
-	<name>pollux-database</name>
 	<packaging>jar</packaging>
+	<name>pollux-database</name>
+	<description>框架可以提供的数据源相关的功能,包括动态数据源、数据源库初始化功能</description>
 	<url>http://www.pollux.com/</url>
 
 	<properties>
@@ -19,7 +20,6 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<downloadSources>true</downloadSources>
 		<argLine>-Dfile.encoding=UTF-8</argLine>
-		<logback-version>1.2.3</logback-version>
 	</properties>
 
 	<dependencies>

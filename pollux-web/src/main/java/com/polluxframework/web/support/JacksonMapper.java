@@ -3,10 +3,12 @@ package com.polluxframework.web.support;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.polluxframework.common.constant.DateEnum;
-import com.polluxframework.exception.RuntimeException;
+import com.polluxframework.exception.impl.CoreException;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.text.StringEscapeUtils;
 
@@ -48,6 +50,17 @@ public class JacksonMapper extends ObjectMapper {
 					public void serialize(String value, JsonGenerator jsonGenerator, SerializerProvider provider) throws IOException {
 						jsonGenerator.writeString(StringEscapeUtils.unescapeHtml4(value));
 					}
+				}).addDeserializer(String.class, new JsonDeserializer<String>() {
+					@Override
+					public String deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+						String text = jsonParser.getText();
+						if (StringUtils.isEmpty(text)) {
+							return text;
+						} else {
+							return StringEscapeUtils.escapeHtml4(text.trim());
+						}
+					}
+
 				}).addDeserializer(Date.class, new JsonDeserializer<Date>() {
 					@Override
 					public Date deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) {
@@ -60,9 +73,9 @@ public class JacksonMapper extends ObjectMapper {
 								return DateUtils.parseDate(text, DateEnum.getAllDateFormat());
 							}
 						} catch (IOException e) {
-							throw new RuntimeException("500", "获取参数有误");
+							throw new CoreException("500", "获取参数有误");
 						} catch (ParseException e1) {
-							throw new RuntimeException("500", "参数传递有误，这里需要一个日期类型的字符串！");
+							throw new CoreException("500", "参数传递有误，这里需要一个日期类型的字符串！");
 						}
 
 					}

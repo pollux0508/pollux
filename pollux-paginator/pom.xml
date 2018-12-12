@@ -11,8 +11,8 @@
 
 	<artifactId>pollux-paginator</artifactId>
 	<packaging>jar</packaging>
-
 	<name>pollux-paginator</name>
+	<description>框架提供的依据myBaits的分页插件</description>
 	<url>http://www.pollux.com/</url>
 
 
@@ -28,6 +28,7 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

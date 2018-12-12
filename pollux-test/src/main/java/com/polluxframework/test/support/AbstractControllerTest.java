@@ -1,7 +1,7 @@
 package com.polluxframework.test.support;
 
-import com.polluxframework.test.utils.WebTestSingleUtils;
-import com.polluxframework.web.entity.WebResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.polluxframework.test.util.UnitTestUtils;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -28,48 +28,51 @@ public abstract class AbstractControllerTest extends AbstractJUnit4SpringContext
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 
+	public static void setObjectMapper(ObjectMapper objectMapper) {
+		UnitTestUtils.buildJsonMapper(objectMapper);
+	}
 
-	public WebResponse post(String url) throws Exception {
+	public String post(String url) throws Exception {
 		return post(url, null, null);
 	}
 
-	public WebResponse post(String url, MultiValueMap<String, String> params) throws Exception {
+	public String post(String url, MultiValueMap<String, String> params) throws Exception {
 		return post(url, null, params);
 	}
 
-	public WebResponse post(String url, HttpSession httpSession, MultiValueMap<String, String> params) throws Exception {
-		return WebTestSingleUtils.doPost(webApplicationContext, httpSession, url, params);
+	public String post(String url, HttpSession httpSession, MultiValueMap<String, String> params) throws Exception {
+		return UnitTestUtils.doPost(webApplicationContext, httpSession, MediaType.ALL, url, params);
 	}
 
-	public WebResponse post(String url, HttpSession httpSession, MediaType mediaType, MultiValueMap<String, String> params) throws Exception {
-		return WebTestSingleUtils.doPost(webApplicationContext, httpSession, mediaType, url, params);
+	public String post(String url, HttpSession httpSession, MediaType mediaType, MultiValueMap<String, String> params) throws Exception {
+		return UnitTestUtils.doPost(webApplicationContext, httpSession, mediaType, url, params);
 	}
 
-	public WebResponse get(String url) throws Exception {
+	public String get(String url) throws Exception {
 		return get(url, null, null);
 	}
 
-	public WebResponse get(String url, MultiValueMap<String, String> params) throws Exception {
+	public String get(String url, MultiValueMap<String, String> params) throws Exception {
 		return get(url, null, params);
 	}
 
-	public WebResponse get(String url, HttpSession httpSession, MultiValueMap<String, String> params) throws Exception {
-		return WebTestSingleUtils.doGet(webApplicationContext, httpSession, url, params);
+	public String get(String url, HttpSession httpSession, MultiValueMap<String, String> params) throws Exception {
+		return UnitTestUtils.doGet(webApplicationContext, httpSession, MediaType.ALL, url, params);
 	}
 
-	public WebResponse get(String url, HttpSession httpSession, MediaType mediaType, MultiValueMap<String, String> params) throws Exception {
-		return WebTestSingleUtils.doGet(webApplicationContext, httpSession, mediaType, url, params);
+	public String get(String url, HttpSession httpSession, MediaType mediaType, MultiValueMap<String, String> params) throws Exception {
+		return UnitTestUtils.doGet(webApplicationContext, httpSession, mediaType, url, params);
 	}
 
-	public WebResponse fileUpload(String url, List<MockMultipartFile> files) throws Exception {
-		return WebTestSingleUtils.fileUpload(webApplicationContext, null, url, files, null);
+	public String fileUpload(String url, List<MockMultipartFile> files) throws Exception {
+		return UnitTestUtils.fileUpload(webApplicationContext, null, url, files, null);
 	}
 
-	public WebResponse fileUpload(String url, List<MockMultipartFile> files, MultiValueMap<String, String> params) throws Exception {
-		return WebTestSingleUtils.fileUpload(webApplicationContext, null, url, files, params);
+	public String fileUpload(String url, List<MockMultipartFile> files, MultiValueMap<String, String> params) throws Exception {
+		return UnitTestUtils.fileUpload(webApplicationContext, null, url, files, params);
 	}
 
-	public WebResponse fileUpload(String url, HttpSession httpSession, List<MockMultipartFile> files, MultiValueMap<String, String> params) throws Exception {
-		return WebTestSingleUtils.fileUpload(webApplicationContext, httpSession, url, files, params);
+	public String fileUpload(String url, HttpSession httpSession, List<MockMultipartFile> files, MultiValueMap<String, String> params) throws Exception {
+		return UnitTestUtils.fileUpload(webApplicationContext, httpSession, url, files, params);
 	}
 }

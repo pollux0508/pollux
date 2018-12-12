@@ -8,7 +8,23 @@
 	<artifactId>pollux-parent</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	<name>pollux-parent</name>
+	<description>所有项目的基础依赖和默认配置</description>
 	<url>http://www.pollux.com/</url>
+
+	<distributionManagement>
+		<repository>
+			<id>Releases</id>
+			<name>Nexus Release</name>
+			<url>http://192.168.65.122:8081/repository/maven-releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>Snapshots</id>
+			<name>Nexus Snapshot</name>
+			<url>http://192.168.65.122:8081/repository/maven-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<properties>
 		<!-- 运行参数的设置 START -->
 		<java.version>1.8</java.version>
@@ -44,7 +60,7 @@
 		<spring.version>4.3.9.RELEASE</spring.version>
 		<mybatis.version>3.4.5</mybatis.version>
 		<mybatis-spring.version>1.3.1</mybatis-spring.version>
-		<jackson.version>2.9.2</jackson.version>
+		<jackson.version>2.9.5</jackson.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<junit.version>4.12</junit.version>
 		<aspectj.version>1.8.4</aspectj.version>
@@ -92,6 +108,7 @@
 		<logback.version>1.2.3</logback.version>
 		<reflections.version>0.9.11</reflections.version>
 		<fastdfs.version>1.27-SNAPSHOT</fastdfs.version>
+		<swagger.version>1.5.10</swagger.version>
 		<!-- 框架Jar包版本控制 END  -->
 	</properties>
 	<dependencyManagement>
@@ -434,6 +451,11 @@
 				<artifactId>fastdfs-client-java</artifactId>
 				<version>${fastdfs.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-annotations</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>
@@ -761,17 +783,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<distributionManagement>
-		<repository>
-			<id>Releases</id>
-			<name>Nexus Release</name>
-			<url>http://nexushost:8081/repository/maven-releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>Snapshots</id>
-			<name>Nexus Snapshot</name>
-			<url>http://nexushost:8081/repository/maven-snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
 </project>

@@ -9,8 +9,9 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>pollux-exception</artifactId>
-	<name>pollux-exception</name>
 	<packaging>jar</packaging>
+	<name>pollux-exception</name>
+	<description>框架提供的异常</description>
 	<url>http://www.pollux.com/</url>
 
 	<properties>
